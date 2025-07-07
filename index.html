@@ -1,0 +1,4141 @@
+<!DOCTYPE html>
+<html lang="es" class="dark-mode">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StudyTrack - Organiza tu tiempo de estudio</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <!-- Fuentes modernas: Inter, Poppins y JetBrains Mono -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Variables para modo oscuro (default) - Ultra Moderno */
+    :root {
+      /* Colores principales ultra modernos */
+      --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --success-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+      --warning-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+      
+      /* Fondos ultra modernos */
+      --bg-primary: #0a0e1a;
+      --bg-secondary: #151b2d;
+      --bg-tertiary: #1f2937;
+      --bg-card: #1e293b;
+      --bg-glass: rgba(255, 255, 255, 0.05);
+      --bg-glass-hover: rgba(255, 255, 255, 0.1);
+      
+      /* Textos con mejor contraste */
+      --text-primary: #f8fafc;
+      --text-secondary: #cbd5e1;
+      --text-muted: #94a3b8;
+      --text-accent: #60a5fa;
+      
+      /* Bordes y líneas */
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-medium: rgba(255, 255, 255, 0.15);
+      --border-strong: rgba(255, 255, 255, 0.25);
+      
+      /* Sombras ultra modernas */
+      --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.15);
+      --shadow-medium: 0 8px 32px rgba(0, 0, 0, 0.25);
+      --shadow-strong: 0 16px 64px rgba(0, 0, 0, 0.35);
+      --shadow-glow: 0 0 20px rgba(102, 126, 234, 0.3);
+      --shadow-glow-hover: 0 0 30px rgba(102, 126, 234, 0.5);
+      
+      /* Efectos especiales */
+      --blur-glass: blur(16px);
+      --blur-backdrop: blur(8px);
+      --border-radius-soft: 12px;
+      --border-radius-medium: 16px;
+      --border-radius-large: 24px;
+      --border-radius-xl: 32px;
+      
+      /* Gradientes de fuego para mascota */
+      --fire-gradient: linear-gradient(135deg, #ff6b6b 0%, #feca57 50%, #ff9ff3 100%);
+      --fire-glow: 0 0 20px rgba(255, 107, 107, 0.6);
+    }
+
+    /* Variables para modo claro - Ultra Moderno */
+    html.light-mode {
+      --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --accent-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --success-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+      --warning-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+      
+      --bg-primary: #f8fafc;
+      --bg-secondary: #f1f5f9;
+      --bg-tertiary: #e2e8f0;
+      --bg-card: #ffffff;
+      --bg-glass: rgba(255, 255, 255, 0.8);
+      --bg-glass-hover: rgba(255, 255, 255, 0.95);
+      
+      --text-primary: #1e293b;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+      --text-accent: #3b82f6;
+      
+      --border-subtle: rgba(0, 0, 0, 0.06);
+      --border-medium: rgba(0, 0, 0, 0.12);
+      --border-strong: rgba(0, 0, 0, 0.18);
+      
+      --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.08);
+      --shadow-medium: 0 8px 32px rgba(0, 0, 0, 0.12);
+      --shadow-strong: 0 16px 64px rgba(0, 0, 0, 0.16);
+      --shadow-glow: 0 0 20px rgba(102, 126, 234, 0.2);
+      --shadow-glow-hover: 0 0 30px rgba(102, 126, 234, 0.35);
+      
+      --fire-gradient: linear-gradient(135deg, #ff6b6b 0%, #feca57 50%, #ff9ff3 100%);
+      --fire-glow: 0 0 20px rgba(255, 107, 107, 0.4);
+    }
+
+    /* Reset y base ultra moderno */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.7;
+      overflow-x: hidden;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+    }
+
+    /* Typography ultra moderna */
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      line-height: 1.3;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+    }
+
+    /* Theme toggle ultra moderno */
+    .theme-toggle {
+      position: fixed;
+      top: 1.5rem;
+      right: 1.5rem;
+      z-index: 1300;
+      background: var(--bg-glass);
+      backdrop-filter: var(--blur-glass);
+      border: 1px solid var(--border-subtle);
+      border-radius: 50%;
+      width: 56px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-primary);
+      font-size: 1.3rem;
+      box-shadow: var(--shadow-medium);
+      cursor: pointer;
+    }
+
+    .theme-toggle:hover {
+      background: var(--bg-glass-hover);
+      box-shadow: var(--shadow-glow-hover);
+      transform: scale(1.05) rotate(180deg);
+    }
+
+    /* Sidebar ultra moderno */
+    #sidebar {
+      width: 320px;
+      height: 100vh;
+      background: var(--bg-glass);
+      backdrop-filter: var(--blur-glass);
+      position: fixed;
+      top: 0;
+      left: -320px;
+      z-index: 1100;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      border-right: 1px solid var(--border-subtle);
+      padding: 2rem 0;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-strong);
+    }
+
+    #sidebar.show {
+      left: 0;
+    }
+
+    .sidebar-header {
+      padding: 0 2rem 2rem;
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .sidebar-brand {
+      font-size: 2rem;
+      font-weight: 800;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+    }
+
+    .sidebar-subtitle {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .sidebar-nav {
+      padding: 0 1.5rem;
+      flex: 1;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border-medium) transparent;
+    }
+
+    .sidebar-nav::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    .sidebar-nav::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .sidebar-nav::-webkit-scrollbar-thumb {
+      background: var(--border-medium);
+      border-radius: 2px;
+    }
+
+    .nav-item {
+      margin-bottom: 0.5rem;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.5rem;
+      border-radius: var(--border-radius-medium);
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 500;
+      background: transparent;
+      border: 1px solid transparent;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav-link::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: var(--primary-gradient);
+      opacity: 0;
+      transition: all 0.3s ease;
+      z-index: -1;
+    }
+
+    .nav-link:hover::before,
+    .nav-link.active::before {
+      left: 0;
+      opacity: 0.1;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--text-primary);
+      background: var(--bg-glass);
+      border-color: var(--border-medium);
+      transform: translateX(8px);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .nav-link.active {
+      background: var(--primary-gradient);
+      color: white;
+      box-shadow: var(--shadow-glow);
+    }
+
+    .nav-link i {
+      font-size: 1.3rem;
+      width: 24px;
+      text-align: center;
+    }
+
+    /* Controles de navegación ultra modernos */
+    .nav-controls {
+      position: absolute;
+      right: 1.5rem;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      z-index: 10;
+    }
+
+    .nav-up-btn, .nav-down-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--border-radius-soft);
+      border: none;
+      background: var(--bg-glass);
+      backdrop-filter: var(--blur-backdrop);
+      color: var(--text-primary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-soft);
+      font-size: 1.1rem;
+    }
+
+    .nav-up-btn:hover, .nav-down-btn:hover {
+      background: var(--primary-gradient);
+      color: white;
+      transform: scale(1.1);
+      box-shadow: var(--shadow-glow);
+    }
+
+    /* Menu toggle ultra moderno */
+    .menu-toggle {
+      position: fixed;
+      top: 1.5rem;
+      left: 1.5rem;
+      z-index: 1200;
+      background: var(--bg-glass);
+      backdrop-filter: var(--blur-glass);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--border-radius-medium);
+      width: 56px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-primary);
+      font-size: 1.3rem;
+      box-shadow: var(--shadow-medium);
+      cursor: pointer;
+      visibility: visible !important;
+      opacity: 1 !important;
+    }
+
+    .menu-toggle:hover {
+      background: var(--bg-glass-hover);
+      transform: scale(1.05);
+      box-shadow: var(--shadow-glow);
+    }
+
+    /* Mascota ultra moderna */
+    .streak-mascot-container {
+      position: fixed;
+      bottom: 2rem;
+      left: 2rem;
+      z-index: 1500; /* Mayor z-index para asegurar que esté encima de todo */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      pointer-events: auto; /* Cambiar a auto para permitir interacción */
+      cursor: pointer; /* Indicar que es interactivo */
+      /* Asegurar que siempre sea visible en todas las secciones */
+      visibility: visible !important;
+      opacity: 1 !important;
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .streak-mascot {
+      width: 80px;
+      height: 80px;
+      background: var(--fire-gradient);
+      border-radius: 50% 50% 0 50%;
+      position: relative;
+      transform: rotate(-45deg);
+      box-shadow: var(--fire-glow), var(--shadow-medium);
+      animation: flame 3s ease-in-out infinite;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform-origin: center;
+      overflow: hidden;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .streak-mascot:hover {
+      transform: rotate(-45deg) scale(1.1);
+      box-shadow: var(--shadow-glow-hover), 0 0 15px rgba(255, 255, 255, 0.3);
+    }
+
+    .streak-mascot::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(from 0deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      animation: rotate 4s linear infinite;
+    }
+
+    .streak-mascot .face {
+      transform: rotate(45deg);
+      font-size: 1.8rem;
+      color: white;
+      text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      z-index: 2;
+      font-weight: 600;
+    }
+
+    .streak-count {
+      background: var(--bg-glass);
+      backdrop-filter: var(--blur-backdrop);
+      color: var(--text-primary);
+      font-weight: 700;
+      padding: 0.5rem 1rem;
+      border-radius: var(--border-radius-large);
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid var(--border-subtle);
+      transition: all 0.3s ease;
+    }
+    
+    /* Burbuja de mensaje de la mascota */
+    .mascot-message {
+      position: absolute;
+      background: var(--bg-glass);
+      backdrop-filter: var(--blur-glass);
+      border-radius: var(--border-radius-large);
+      padding: 1rem 1.5rem;
+      color: var(--text-primary);
+      font-weight: 500;
+      font-size: 0.9rem;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%) translateY(-10px);
+      width: 220px;
+      box-shadow: var(--shadow-medium);
+      border: 1px solid var(--border-subtle);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      pointer-events: none;
+      text-align: center;
+      z-index: 1600;
+      margin-bottom: 1rem;
+    }
+    
+    .mascot-message.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0);
+    }
+    
+    .mascot-message::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%) rotate(45deg);
+      width: 16px;
+      height: 16px;
+      background: var(--bg-glass);
+      border-right: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    @keyframes flame {
+      0%, 100% {
+        transform: rotate(-45deg) scale(1);
+        filter: hue-rotate(0deg);
+      }
+      50% {
+        transform: rotate(-45deg) scale(1.15);
+        filter: hue-rotate(20deg);
+      }
+    }
+
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* Animaciones de mascota */
+    .bounce-float {
+      animation: bounceFloat 4s ease-in-out infinite;
+    }
+
+    .wiggle {
+      animation: wiggle 2s ease-in-out infinite;
+    }
+
+    .excited {
+      animation: excited 1.5s ease-in-out infinite;
+    }
+
+    @keyframes bounceFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+
+    @keyframes wiggle {
+      0%, 100% { transform: rotate(-10deg); }
+      50% { transform: rotate(10deg); }
+    }
+
+    @keyframes excited {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.3); }
+    }
+
+    /* Main content ultra moderno */
+    .main-content {
+      margin-left: 0;
+      padding: 6rem 2rem 2rem;
+      min-height: 100vh;
+      transition: margin-left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+    }
+
+    .main-content.sidebar-open {
+      margin-left: 320px;
+    }
+
+    /* Cards ultra modernas */
+    .ultra-card {
+      background: var(--bg-glass);
+      backdrop-filter: var(--blur-glass);
+      border-radius: var(--border-radius-large);
+      padding: 2.5rem;
+      margin-bottom: 2rem;
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-medium);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ultra-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: var(--primary-gradient);
+      opacity: 0.5;
+    }
+
+    .ultra-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-strong);
+      border-color: var(--border-medium);
+    }
+
+    .card-header-ultra {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .card-icon-ultra {
+      width: 64px;
+      height: 64px;
+      border-radius: var(--border-radius-medium);
+      background: var(--primary-gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.8rem;
+      box-shadow: var(--shadow-glow);
+    }
+
+    .card-title-ultra {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+    }
+
+    .card-subtitle-ultra {
+      color: var(--text-muted);
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    /* Grid ultra moderno */
+    .ultra-grid {
+      display: grid;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .ultra-grid-2 { 
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); 
+    }
+    .ultra-grid-3 { 
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+    }
+    .ultra-grid-4 { 
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
+    }
+
+    /* Botones ultra modernos */
+    .btn-ultra {
+      background: var(--primary-gradient);
+      border: none;
+      border-radius: var(--border-radius-medium);
+      padding: 1rem 2rem;
+      font-weight: 600;
+      color: white;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-size: 0.9rem;
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .btn-ultra::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: all 0.6s ease;
+    }
+
+    .btn-ultra:hover::before {
+      left: 100%;
+    }
+
+    .btn-ultra:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-glow-hover);
+      color: white;
+    }
+
+    .btn-ultra:active {
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary-ultra {
+      background: var(--bg-glass);
+      backdrop-filter: var(--blur-backdrop);
+      border: 1px solid var(--border-medium);
+      color: var(--text-primary);
+    }
+
+    .btn-secondary-ultra:hover {
+      background: var(--bg-glass-hover);
+      color: var(--text-primary);
+      box-shadow: var(--shadow-medium);
+    }
+
+    /* Formularios ultra modernos */
+    .form-ultra {
+      background: var(--bg-glass);
+      backdrop-filter: var(--blur-backdrop);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--border-radius-medium);
+      padding: 1rem 1.5rem;
+      color: var(--text-primary);
+      font-size: 1rem;
+      font-weight: 500;
+      width: 100%;
+    }
+
+    .form-ultra:focus {
+      outline: none;
+      border-color: var(--text-accent);
+      box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+      background: var(--bg-glass-hover);
+    }
+
+    .form-ultra::placeholder {
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    /* Landing page ultra moderna */
+    .landing-hero {
+      min-height: 100vh;
+      background: 
+        radial-gradient(circle at 20% 80%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(118, 75, 162, 0.1) 0%, transparent 50%),
+        linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .landing-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(circle at 30% 30%, rgba(79, 172, 254, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 70% 70%, rgba(249, 115, 22, 0.05) 0%, transparent 40%);
+      animation: float 20s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      33% { transform: translate(30px, -30px) rotate(120deg); }
+      66% { transform: translate(-20px, 20px) rotate(240deg); }
+    }
+
+    .landing-content {
+      text-align: center;
+      max-width: 900px;
+      z-index: 2;
+      position: relative;
+    }
+
+    .landing-title {
+      font-size: clamp(3.5rem, 10vw, 6rem);
+      font-weight: 900;
+      background: var(--primary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1.5rem;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+    }
+
+    .landing-subtitle {
+      font-size: clamp(1.2rem, 4vw, 1.5rem);
+      color: var(--text-secondary);
+      margin-bottom: 4rem;
+      font-weight: 400;
+      line-height: 1.6;
+    }
+
+    .landing-features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin: 4rem 0;
+    }
+
+    .feature-card-ultra {
+      background: var(--bg-glass);
+      backdrop-filter: var(--blur-glass);
+      border-radius: var(--border-radius-large);
+      padding: 2.5rem;
+      border: 1px solid var(--border-subtle);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card-ultra::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(from 0deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+
+    .feature-card-ultra:hover::before {
+      opacity: 1;
+      animation: rotate 3s linear infinite;
+    }
+
+    .feature-card-ultra:hover {
+      transform: translateY(-10px);
+      box-shadow: var(--shadow-strong);
+      border-color: var(--border-medium);
+    }
+
+    .feature-icon-ultra {
+      font-size: 3rem;
+      margin-bottom: 1.5rem;
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .feature-title-ultra {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+    }
+
+    .feature-description-ultra {
+      color: var(--text-muted);
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    /* Animaciones globales */
+    .fade-in {
+      animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .pulse-glow {
+      animation: pulseGlow 3s ease-in-out infinite;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% {
+        box-shadow: var(--shadow-glow);
+      }
+      50% {
+        box-shadow: var(--shadow-glow-hover);
+      }
+    }
+
+    /* Modales ultra modernos */
+    .modal-ultra {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: var(--blur-glass);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 3000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .modal-ultra.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-card-ultra {
+      background: var(--bg-glass);
+      backdrop-filter: var(--blur-glass);
+      border-radius: var(--border-radius-xl);
+      padding: 3rem;
+      max-width: 500px;
+      width: 90%;
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-strong);
+      transform: scale(0.9) translateY(20px);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .modal-ultra.show .modal-card-ultra {
+      transform: scale(1) translateY(0);
+    }
+
+    .modal-header-ultra {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .modal-logo-ultra {
+      width: 80px;
+      height: 80px;
+      background: var(--primary-gradient);
+      border-radius: var(--border-radius-large);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      font-size: 2rem;
+      color: white;
+      box-shadow: var(--shadow-glow);
+    }
+
+    .modal-title-ultra {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+
+    .modal-subtitle-ultra {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    /* Responsive ultra moderno */
+    @media (max-width: 768px) {
+      #sidebar {
+        width: 100%;
+        left: -100%;
+      }
+      
+      .main-content {
+        padding: 5rem 1rem 2rem;
+      }
+      
+      .main-content.sidebar-open {
+        margin-left: 0;
+      }
+      
+      .ultra-card {
+        padding: 2rem;
+      }
+      
+      .ultra-grid {
+        gap: 1.5rem;
+      }
+      
+      .theme-toggle,
+      .menu-toggle {
+        width: 48px;
+        height: 48px;
+        font-size: 1.1rem;
+      }
+      
+      /* Responsive para la mascota de racha */
+      .streak-mascot-container {
+        bottom: 1rem;
+        left: 1rem;
+        z-index: 1500; /* Asegurar que esté por encima de otros elementos */
+      }
+      
+      .streak-mascot {
+        width: 60px;
+        height: 60px;
+      }
+      
+      .streak-mascot .face {
+        font-size: 1.4rem;
+      }
+      
+      .streak-count {
+        font-size: 0.8rem;
+        padding: 0.3rem 0.8rem;
+      }
+    }
+    
+    /* Ajustes para pantallas muy pequeñas */
+    @media (max-width: 480px) {
+      .streak-mascot-container {
+        bottom: 0.7rem;
+        left: 0.7rem;
+      }
+      
+      .streak-mascot {
+        width: 50px;
+        height: 50px;
+      }
+      
+      .streak-mascot .face {
+        font-size: 1.2rem;
+      }
+      
+      .streak-count {
+        font-size: 0.7rem;
+        padding: 0.2rem 0.6rem;
+        margin-top: 0.5rem;
+      }
+    }
+
+    /* Estados de interacción mejorados */
+    .interactive {
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .interactive:hover {
+      transform: translateY(-5px);
+    }
+
+    .interactive:active {
+      transform: translateY(-2px);
+    }
+
+    /* Utilidades de mostrar/ocultar */
+    .hidden {
+      display: none !important;
+    }
+
+    /* Efectos especiales para estados */
+    .glow-on-hover {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .glow-on-hover::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .glow-on-hover:hover::after {
+      opacity: 1;
+    }
+
+    /* Scroll personalizado */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg-secondary);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--border-medium);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--border-strong);
+    }
+
+    /* Estilos para Pomodoro Timer */
+    .pomodoro-timer-container {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .pomodoro-timer {
+      position: relative;
+      margin-bottom: 2rem;
+    }
+
+    .timer-circle {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .timer-svg {
+      transform: rotate(-90deg);
+    }
+
+    .timer-bg {
+      fill: none;
+      stroke: var(--border-subtle);
+      stroke-width: 8;
+    }
+
+    .timer-progress {
+      fill: none;
+      stroke: url(#timerGradient);
+      stroke-width: 8;
+      stroke-linecap: round;
+      stroke-dasharray: 565.48;
+      stroke-dashoffset: 0;
+      transition: stroke-dashoffset 1s linear;
+    }
+
+    .timer-text {
+      position: absolute;
+      text-align: center;
+      color: var(--text-primary);
+    }
+
+    .timer-display {
+      font-size: 2.5rem;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .timer-mode {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .pomodoro-controls {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: 1rem;
+      background: var(--bg-glass);
+      border-radius: var(--border-radius-medium);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* Estilos para Progreso */
+    .metric-card {
+      background: var(--bg-glass);
+      backdrop-filter: var(--blur-backdrop);
+      border-radius: var(--border-radius-medium);
+      padding: 1.5rem;
+      border: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .metric-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-medium);
+    }
+
+    .metric-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: var(--border-radius-medium);
+      background: var(--primary-gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.5rem;
+    }
+
+    .metric-value {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      line-height: 1;
+    }
+
+    .metric-label {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      margin-bottom: 0.25rem;
+    }
+
+    .metric-change {
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .metric-change.positive {
+      color: #22c55e;
+    }
+
+    .metric-change.negative {
+      color: #ef4444;
+    }
+
+    .metric-change.neutral {
+      color: var(--text-accent);
+    }
+
+    .progress-chart {
+      height: 250px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .chart-bars {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      height: 200px;
+      gap: 0.5rem;
+    }
+
+    .chart-bar {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .bar {
+      width: 100%;
+      background: var(--primary-gradient);
+      border-radius: 4px 4px 0 0;
+      min-height: 20px;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .bar:hover {
+      opacity: 0.8;
+      transform: scaleY(1.05);
+    }
+
+    .bar-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .chart-info {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .goals-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .goal-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .goal-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .goal-name {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .goal-progress-text {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .goal-progress-bar {
+      height: 8px;
+      background: var(--bg-tertiary);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .goal-progress-fill {
+      height: 100%;
+      background: var(--success-gradient);
+      border-radius: 4px;
+      transition: width 0.5s ease;
+    }
+
+    .productivity-insight {
+      display: flex;
+      gap: 1rem;
+      align-items: start;
+      padding: 1.5rem;
+      background: var(--bg-glass);
+      border-radius: var(--border-radius-medium);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .insight-icon {
+      font-size: 1.5rem;
+      margin-top: 0.25rem;
+    }
+
+    .insight-content h5 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+
+    .insight-content p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    /* Estilos para Gamificación */
+    .player-profile {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .player-avatar {
+      position: relative;
+    }
+
+    .avatar-img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 4px solid var(--primary-gradient);
+      object-fit: cover;
+    }
+
+    .level-badge {
+      position: absolute;
+      bottom: -5px;
+      right: -5px;
+      background: var(--warning-gradient);
+      color: white;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.1rem;
+      border: 3px solid var(--bg-card);
+    }
+
+    .player-info {
+      flex: 1;
+      min-width: 250px;
+    }
+
+    .player-name {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.25rem;
+    }
+
+    .player-title {
+      color: var(--text-accent);
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .xp-bar {
+      height: 12px;
+      background: var(--bg-tertiary);
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 0.5rem;
+    }
+
+    .xp-fill {
+      height: 100%;
+      background: var(--success-gradient);
+      border-radius: 6px;
+      transition: width 0.5s ease;
+    }
+
+    .xp-text {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .player-stats {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .stat-box {
+      text-align: center;
+      padding: 1rem;
+      background: var(--bg-glass);
+      border-radius: var(--border-radius-medium);
+      border: 1px solid var(--border-subtle);
+      min-width: 80px;
+    }
+
+    .stat-box .stat-number {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      line-height: 1;
+    }
+
+    .stat-box .stat-name {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .achievements-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .achievement-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+      background: var(--bg-glass);
+      border-radius: var(--border-radius-medium);
+      border: 1px solid var(--border-subtle);
+      transition: all 0.3s ease;
+    }
+
+    .achievement-item.unlocked {
+      border-color: var(--border-medium);
+    }
+
+    .achievement-item.locked {
+      opacity: 0.6;
+    }
+
+    .achievement-item:hover {
+      transform: translateY(-2px);
+    }
+
+    .achievement-icon {
+      font-size: 2rem;
+      width: 50px;
+      text-align: center;
+    }
+
+    .achievement-info {
+      flex: 1;
+    }
+
+    .achievement-info h5 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+      color: var(--text-primary);
+    }
+
+    .achievement-info p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 0.25rem;
+    }
+
+    .achievement-xp {
+      font-size: 0.8rem;
+      color: var(--text-accent);
+      font-weight: 600;
+    }
+
+    .challenges-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .challenge-item {
+      padding: 1.5rem;
+      background: var(--bg-glass);
+      border-radius: var(--border-radius-medium);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .challenge-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .challenge-icon {
+      font-size: 1.5rem;
+      width: 40px;
+      text-align: center;
+    }
+
+    .challenge-info {
+      flex: 1;
+    }
+
+    .challenge-info h5 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+      color: var(--text-primary);
+    }
+
+    .challenge-info p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    .challenge-reward {
+      font-size: 0.9rem;
+      color: var(--text-accent);
+      font-weight: 700;
+    }
+
+    .challenge-progress {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .progress-bar {
+      height: 8px;
+      background: var(--bg-tertiary);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--accent-gradient);
+      border-radius: 4px;
+      transition: width 0.5s ease;
+    }
+
+    .progress-text {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .leaderboard {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .leaderboard-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.5rem;
+      background: var(--bg-glass);
+      border-radius: var(--border-radius-medium);
+      border: 1px solid var(--border-subtle);
+      transition: all 0.3s ease;
+    }
+
+    .leaderboard-item.current-user {
+      border-color: var(--text-accent);
+      background: rgba(96, 165, 250, 0.1);
+    }
+
+    .leaderboard-item:hover {
+      transform: translateY(-2px);
+    }
+
+    .rank-number {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      min-width: 30px;
+      text-align: center;
+    }
+
+    .leaderboard-item .player-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex: 1;
+    }
+
+    .player-thumb {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .player-details {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .player-details .player-name {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+
+    .player-details .player-score {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .rank-badge {
+      font-size: 1.5rem;
+    }
+
+    .rank-badge.gold {
+      filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.5));
+    }
+
+    @media (max-width: 768px) {
+      .player-profile {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .player-stats {
+        justify-content: center;
+      }
+    }
+
+    /* Estilos para Colaborativo */
+    .study-rooms { display: flex; flex-direction: column; gap: 1rem; }
+    .room-item { padding: 1.5rem; background: var(--bg-glass); border-radius: var(--border-radius-medium); border: 1px solid var(--border-subtle); }
+    .room-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+    .room-icon { font-size: 1.5rem; width: 40px; text-align: center; }
+    .room-info h5 { margin: 0 0 0.25rem; color: var(--text-primary); }
+    .room-info p { margin: 0; color: var(--text-muted); font-size: 0.9rem; }
+    .room-members { text-align: right; }
+    .member-count { font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 0.5rem; }
+    .member-avatars { display: flex; gap: -8px; justify-content: flex-end; }
+    .member-avatar { width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--bg-card); }
+    .more-members { background: var(--bg-tertiary); color: var(--text-muted); width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 600; }
+    .room-actions { display: flex; justify-content: space-between; align-items: center; }
+    .room-status.online { color: #22c55e; font-weight: 600; font-size: 0.8rem; }
+    .btn-sm { padding: 0.5rem 1rem; font-size: 0.8rem; }
+
+    .chat-container { height: 400px; display: flex; flex-direction: column; }
+    .chat-messages { flex: 1; overflow-y: auto; padding: 1rem; background: var(--bg-secondary); border-radius: var(--border-radius-medium); margin-bottom: 1rem; }
+    .message { display: flex; gap: 0.75rem; margin-bottom: 1rem; }
+    .message.own { flex-direction: row-reverse; }
+    .message.own .message-content { background: var(--primary-gradient); color: white; }
+    .message-avatar .avatar { width: 40px; height: 40px; border-radius: 50%; }
+    .message-content { background: var(--bg-glass); padding: 0.75rem; border-radius: var(--border-radius-medium); max-width: 70%; }
+    .message-header { display: flex; justify-content: space-between; margin-bottom: 0.25rem; }
+    .message-author { font-weight: 600; font-size: 0.8rem; }
+    .message-time { font-size: 0.7rem; color: var(--text-muted); }
+    .message-text { font-size: 0.9rem; }
+    .chat-input { display: flex; gap: 0.5rem; }
+
+    .resource-item { display: flex; align-items: center; gap: 1rem; padding: 1rem; background: var(--bg-glass); border-radius: var(--border-radius-medium); border: 1px solid var(--border-subtle); }
+    .resource-icon { font-size: 1.5rem; width: 40px; text-align: center; }
+    .resource-info { flex: 1; }
+    .resource-info h5 { margin: 0 0 0.25rem; color: var(--text-primary); }
+    .resource-info p { margin: 0 0 0.25rem; color: var(--text-muted); font-size: 0.9rem; }
+    .resource-meta { font-size: 0.8rem; color: var(--text-muted); }
+    .resource-actions { display: flex; gap: 0.5rem; }
+
+    /* Estilos para Calendario */
+    .week-view { display: flex; flex-direction: column; gap: 0.75rem; }
+    .day-card { padding: 1rem; background: var(--bg-glass); border-radius: var(--border-radius-medium); border: 1px solid var(--border-subtle); }
+    .day-card.today { border-color: var(--text-accent); background: rgba(96, 165, 250, 0.1); }
+    .day-header { font-weight: 600; margin-bottom: 0.5rem; color: var(--text-primary); }
+    .events { display: flex; flex-direction: column; gap: 0.25rem; }
+    .event { padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.8rem; }
+    .event.math { background: rgba(59, 130, 246, 0.2); color: #3b82f6; }
+    .event.physics { background: rgba(34, 197, 94, 0.2); color: #22c55e; }
+    .event.chemistry { background: rgba(239, 68, 68, 0.2); color: #ef4444; }
+    .event.history { background: rgba(168, 85, 247, 0.2); color: #a855f7; }
+
+    .events-list { display: flex; flex-direction: column; gap: 1rem; }
+    .event-item { display: flex; align-items: center; gap: 0.75rem; }
+    .event-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .event-item.urgent .event-dot { background: #ef4444; }
+    .event-item.normal .event-dot { background: #3b82f6; }
+    .event-info h5 { margin: 0 0 0.25rem; font-size: 0.9rem; }
+    .event-info p { margin: 0; font-size: 0.8rem; color: var(--text-muted); }
+
+    /* Estilos para Planes */
+    .plan-card { padding: 2rem; background: var(--bg-glass); border-radius: var(--border-radius-large); border: 1px solid var(--border-subtle); text-align: center; position: relative; }
+    .plan-card.popular { border-color: var(--text-accent); transform: scale(1.05); }
+    .popular-badge { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: var(--accent-gradient); color: white; padding: 0.25rem 1rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
+    .plan-card h3 { margin-bottom: 1rem; color: var(--text-primary); }
+    .price { font-size: 2rem; font-weight: 800; color: var(--text-primary); margin-bottom: 1.5rem; }
+    .price span { font-size: 1rem; color: var(--text-muted); }
+    .features { list-style: none; padding: 0; margin: 0 0 1.5rem; }
+    .features li { padding: 0.5rem 0; font-size: 0.9rem; }
+
+    /* Estilos para Contacto */
+    .contact-info { display: flex; flex-direction: column; gap: 1.5rem; }
+    .contact-item { display: flex; align-items: center; gap: 1rem; }
+    .contact-item i { font-size: 1.5rem; color: var(--text-accent); width: 30px; }
+    .contact-item h5 { margin: 0 0 0.25rem; color: var(--text-primary); }
+    .contact-item p { margin: 0; color: var(--text-muted); font-size: 0.9rem; }
+
+    /* Estilos para Libro de Reclamaciones */
+    .legal-info { display: flex; flex-direction: column; gap: 1.5rem; }
+    .legal-item { display: flex; align-items: center; gap: 1rem; }
+    .legal-item i { font-size: 1.5rem; width: 30px; }
+    .legal-item h5 { margin: 0 0 0.25rem; color: var(--text-primary); }
+    .legal-item p { margin: 0; color: var(--text-muted); font-size: 0.9rem; }
+
+    .claims-history { display: flex; flex-direction: column; gap: 1rem; }
+    .claim-item { padding: 1rem; background: var(--bg-glass); border-radius: var(--border-radius-medium); border: 1px solid var(--border-subtle); }
+    .claim-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
+    .claim-id { font-weight: 700; color: var(--text-accent); }
+    .claim-status { padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
+    .status-pending { background: rgba(249, 115, 22, 0.2); color: #f97316; }
+    .status-resolved { background: rgba(34, 197, 94, 0.2); color: #22c55e; }
+    .claim-info h5 { margin: 0 0 0.5rem; color: var(--text-primary); font-size: 0.9rem; }
+    .claim-date, .claim-type { margin: 0; font-size: 0.8rem; color: var(--text-muted); }
+
+    /* Estilos para Modal de Pago */
+    .payment-modal { max-width: 600px; width: 95%; max-height: 90vh; overflow-y: auto; }
+    .modal-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: var(--text-muted); font-size: 1.5rem; cursor: pointer; }
+    .modal-close:hover { color: var(--text-primary); }
+
+    .payment-methods { margin-bottom: 2rem; }
+    .payment-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0.75rem; }
+    .payment-option { padding: 1rem; border: 2px solid var(--border-subtle); border-radius: var(--border-radius-medium); text-align: center; cursor: pointer; transition: all 0.3s ease; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
+    .payment-option:hover, .payment-option.active { border-color: var(--text-accent); background: rgba(96, 165, 250, 0.1); }
+    .payment-option i { font-size: 1.5rem; color: var(--text-accent); }
+    .payment-option span { font-size: 0.9rem; font-weight: 600; color: var(--text-primary); }
+
+    .payment-form { margin-bottom: 2rem; }
+    .payment-form.hidden { display: none; }
+
+    .paypal-info, .qr-payment { text-align: center; }
+    .qr-code { margin: 2rem 0; }
+    .amount-display { font-size: 1.2rem; font-weight: 700; color: var(--text-primary); margin-top: 1rem; }
+
+    .order-summary { background: var(--bg-secondary); padding: 1.5rem; border-radius: var(--border-radius-medium); margin-bottom: 2rem; }
+    .order-summary h4 { margin-bottom: 1rem; color: var(--text-primary); }
+    .summary-item { display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--text-muted); }
+    .summary-total { display: flex; justify-content: space-between; padding-top: 1rem; border-top: 1px solid var(--border-subtle); font-weight: 700; color: var(--text-primary); font-size: 1.1rem; }
+
+    .payment-actions { display: flex; gap: 1rem; justify-content: flex-end; }
+
+    /* Formateo automático de tarjeta */
+    #cardNumber { letter-spacing: 0.1em; }
+    #cardExpiry { letter-spacing: 0.1em; }
+
+    /* Notificaciones ultra modernas */
+    .notification-ultra {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--bg-glass);
+      backdrop-filter: var(--blur-glass);
+      color: var(--text-primary);
+      padding: 1.5rem 2rem;
+      border-radius: var(--border-radius-large);
+      box-shadow: var(--shadow-strong);
+      z-index: 2000;
+      transform: translateX(150%);
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      border: 1px solid var(--border-subtle);
+      min-width: 300px;
+    }
+
+    .notification-ultra.show {
+      transform: translateX(0);
+    }
+
+    .notification-icon-ultra {
+      font-size: 1.5rem;
+      color: var(--text-accent);
+    }
+
+    .notification-content-ultra {
+      flex: 1;
+      font-weight: 500;
+    }
+
+    .notification-close-ultra {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.2rem;
+      cursor: pointer;
+      padding: 0.25rem;
+      border-radius: var(--border-radius-soft);
+    }
+
+    .notification-close-ultra:hover {
+      color: var(--text-primary);
+      background: var(--bg-glass);
+    }
+  </style>
+</head>
+<body>
+  <!-- Menu Toggle Button -->
+  <button class="menu-toggle" id="menuToggle">
+    <i class="bi bi-list"></i>
+  </button>
+
+  <!-- Theme Toggle Button -->
+  <button class="theme-toggle" id="themeToggle">
+    <i class="bi bi-sun-fill"></i>
+  </button>
+
+  <!-- Mascota de Racha de Estudio -->
+  <div class="streak-mascot-container bounce-float" id="streakMascot">
+    <div class="mascot-message" id="mascotMessage">¡Mantén tu racha de estudio!</div>
+    <div class="streak-mascot pulse-glow">
+      <div class="face">^_^</div>
+    </div>
+    <div class="streak-count">15 días</div>
+  </div>
+
+  <!-- Sidebar -->
+  <nav id="sidebar">
+    <div class="sidebar-header">
+      <h2 class="sidebar-brand">
+        <i class="bi bi-book"></i> StudyTrack
+      </h2>
+      <p class="sidebar-subtitle">Organiza tu tiempo de estudio</p>
+    </div>
+    
+    <div class="sidebar-nav" id="sidebarNav">
+      <div class="nav-controls">
+        <button class="nav-up-btn" id="navUp">
+          <i class="bi bi-chevron-up"></i>
+        </button>
+        <button class="nav-down-btn" id="navDown">
+          <i class="bi bi-chevron-down"></i>
+        </button>
+      </div>
+      
+      <div class="nav-item">
+        <a href="#inicio" class="nav-link active">
+          <i class="bi bi-house-door"></i>
+          <span>Inicio</span>
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="#pomodoro" class="nav-link">
+          <i class="bi bi-clock"></i>
+          <span>Pomodoro</span>
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="#progreso" class="nav-link">
+          <i class="bi bi-graph-up"></i>
+          <span>Progreso</span>
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="#gamificacion" class="nav-link">
+          <i class="bi bi-trophy"></i>
+          <span>Gamificación</span>
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="#colaborativo" class="nav-link">
+          <i class="bi bi-people"></i>
+          <span>Estudio Colaborativo</span>
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="#calendario" class="nav-link">
+          <i class="bi bi-calendar-event"></i>
+          <span>Calendario</span>
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="#planes" class="nav-link">
+          <i class="bi bi-star"></i>
+          <span>Planes</span>
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="#contacto" class="nav-link">
+          <i class="bi bi-envelope"></i>
+          <span>Contacto</span>
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="#reclamaciones" class="nav-link">
+          <i class="bi bi-journal-text"></i>
+          <span>Libro de Reclamaciones</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Landing Page -->
+  <div id="landingPage" class="landing-hero">
+    <div class="landing-content fade-in">
+      <h1 class="landing-title">StudyTrack</h1>
+      <p class="landing-subtitle">La plataforma definitiva para organizar tu tiempo de estudio y alcanzar tus metas académicas</p>
+      
+      <div class="landing-features">
+        <div class="feature-card-ultra glow-on-hover">
+          <div class="feature-icon-ultra">⏰</div>
+          <h3 class="feature-title-ultra">Técnica Pomodoro</h3>
+          <p class="feature-description-ultra">Mejora tu concentración con sesiones de estudio optimizadas</p>
+        </div>
+        <div class="feature-card-ultra glow-on-hover">
+          <div class="feature-icon-ultra">📊</div>
+          <h3 class="feature-title-ultra">Seguimiento de Progreso</h3>
+          <p class="feature-description-ultra">Visualiza tu avance y mantente motivado cada día</p>
+        </div>
+        <div class="feature-card-ultra glow-on-hover">
+          <div class="feature-icon-ultra">🏆</div>
+          <h3 class="feature-title-ultra">Gamificación</h3>
+          <p class="feature-description-ultra">Convierte el estudio en una experiencia divertida</p>
+        </div>
+        <div class="feature-card-ultra glow-on-hover">
+          <div class="feature-icon-ultra">👥</div>
+          <h3 class="feature-title-ultra">Colaboración</h3>
+          <p class="feature-description-ultra">Estudia con amigos y comparte recursos</p>
+        </div>
+      </div>
+
+      <button class="btn-ultra pulse-glow" id="startBtn">
+        Comenzar Ahora
+        <i class="bi bi-arrow-right ms-2"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Login Modal -->
+  <div id="loginModal" class="modal-ultra">
+    <div class="modal-card-ultra">
+      <div class="modal-header-ultra">
+        <div class="modal-logo-ultra">
+          <i class="bi bi-book"></i>
+        </div>
+        <h2 class="modal-title-ultra">Bienvenido a StudyTrack</h2>
+        <p class="modal-subtitle-ultra">Inicia sesión para acceder a todas las funciones</p>
+      </div>
+
+      <form id="loginForm">
+        <div class="mb-3">
+          <label class="form-label" for="email">Correo electrónico</label>
+          <input type="email" id="email" class="form-ultra" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="password">Contraseña</label>
+          <input type="password" id="password" class="form-ultra" required>
+        </div>
+        <button type="submit" class="btn-ultra w-100 mb-3">
+          Iniciar Sesión
+        </button>
+        <p class="text-center">
+          <small class="text-muted">¿No tienes cuenta? <a href="#" style="color: var(--text-accent);">Regístrate aquí</a></small>
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="main-content" id="mainContent">
+    <!-- Inicio Section -->
+    <section id="inicio" class="fade-in">
+      <div class="ultra-card">
+        <div class="card-header-ultra">
+          <div class="card-icon-ultra">
+            <i class="bi bi-house-door"></i>
+          </div>
+          <div>
+            <h1 class="card-title-ultra">Bienvenido a StudyTrack</h1>
+            <p class="card-subtitle-ultra">Tu plataforma integral para el éxito académico</p>
+          </div>
+        </div>
+
+        <div class="ultra-grid ultra-grid-2">
+          <div>
+            <h3 class="mb-4">¿Qué es StudyTrack?</h3>
+            <p class="text-muted mb-4" style="font-size: 1.1rem; line-height: 1.7;">
+              StudyTrack es una plataforma diseñada para estudiantes que buscan optimizar su tiempo de estudio, 
+              mejorar su productividad y alcanzar sus metas académicas de manera sistemática y motivadora.
+            </p>
+            
+            <h4 class="mb-3">Características principales:</h4>
+            <div class="row g-3">
+              <div class="col-12">
+                <div class="d-flex align-items-center gap-3 p-3 rounded-3 bg-opacity-10" style="background: var(--success-gradient);">
+                  <i class="bi bi-check-circle text-success fs-4"></i>
+                  <span>Técnica Pomodoro personalizable</span>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="d-flex align-items-center gap-3 p-3 rounded-3 bg-opacity-10" style="background: var(--accent-gradient);">
+                  <i class="bi bi-check-circle text-info fs-4"></i>
+                  <span>Seguimiento detallado de progreso</span>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="d-flex align-items-center gap-3 p-3 rounded-3 bg-opacity-10" style="background: var(--warning-gradient);">
+                  <i class="bi bi-check-circle text-warning fs-4"></i>
+                  <span>Sistema de gamificación motivador</span>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="d-flex align-items-center gap-3 p-3 rounded-3 bg-opacity-10" style="background: var(--secondary-gradient);">
+                  <i class="bi bi-check-circle text-danger fs-4"></i>
+                  <span>Herramientas de colaboración</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-center">
+            <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=800&q=80" 
+                 alt="Estudiante organizando su tiempo" 
+                 class="img-fluid rounded-4 shadow-lg mb-4 interactive">
+            
+            <div class="ultra-card glow-on-hover text-center">
+              <h4 class="text-primary mb-3" style="background: var(--primary-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">¡Comienza tu viaje académico!</h4>
+              <p class="text-muted mb-3">
+                Únete a miles de estudiantes que ya han transformado su manera de estudiar
+              </p>
+              <button class="btn-ultra">
+                Explorar Funciones
+                <i class="bi bi-arrow-right ms-2"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Otras secciones permanecen ocultas inicialmente -->
+    <section id="pomodoro" class="fade-in hidden">
+      <div class="ultra-card">
+        <div class="card-header-ultra">
+          <div class="card-icon-ultra">
+            <i class="bi bi-clock"></i>
+          </div>
+          <div>
+            <h2 class="card-title-ultra">Técnica Pomodoro</h2>
+            <p class="card-subtitle-ultra">Optimiza tu concentración con intervalos de trabajo efectivos</p>
+          </div>
+        </div>
+
+        <div class="ultra-grid ultra-grid-2">
+          <!-- Timer Principal -->
+          <div class="text-center">
+            <div class="pomodoro-timer-container">
+              <div class="pomodoro-timer" id="pomodoroTimer">
+                <div class="timer-circle">
+                  <svg class="timer-svg" width="200" height="200">
+                    <defs>
+                      <linearGradient id="timerGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+                      </linearGradient>
+                    </defs>
+                    <circle class="timer-bg" cx="100" cy="100" r="90"></circle>
+                    <circle class="timer-progress" cx="100" cy="100" r="90" id="timerProgress"></circle>
+                  </svg>
+                  <div class="timer-text">
+                    <div class="timer-display" id="timerDisplay">25:00</div>
+                    <div class="timer-mode" id="timerMode">Sesión de Trabajo</div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="pomodoro-controls mt-4">
+                <button class="btn-ultra" id="startPauseBtn">
+                  <i class="bi bi-play-fill"></i> Iniciar
+                </button>
+                <button class="btn-secondary-ultra" id="resetBtn">
+                  <i class="bi bi-arrow-clockwise"></i> Reiniciar
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Configuración y Estadísticas -->
+          <div>
+            <div class="ultra-card mb-4">
+              <h4 class="mb-3">Configuración</h4>
+              <div class="row g-3">
+                <div class="col-12">
+                  <label class="form-label">Tiempo de Trabajo (minutos)</label>
+                  <input type="range" class="form-range" min="15" max="60" value="25" id="workTimeRange">
+                  <div class="d-flex justify-content-between text-muted small">
+                    <span>15 min</span>
+                    <span id="workTimeValue">25 min</span>
+                    <span>60 min</span>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <label class="form-label">Descanso Corto (minutos)</label>
+                  <input type="range" class="form-range" min="3" max="15" value="5" id="shortBreakRange">
+                  <div class="d-flex justify-content-between text-muted small">
+                    <span>3 min</span>
+                    <span id="shortBreakValue">5 min</span>
+                    <span>15 min</span>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <label class="form-label">Descanso Largo (minutos)</label>
+                  <input type="range" class="form-range" min="15" max="30" value="20" id="longBreakRange">
+                  <div class="d-flex justify-content-between text-muted small">
+                    <span>15 min</span>
+                    <span id="longBreakValue">20 min</span>
+                    <span>30 min</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="ultra-card">
+              <h4 class="mb-3">Estadísticas de Hoy</h4>
+              <div class="stats-grid">
+                <div class="stat-item">
+                  <div class="stat-number" id="completedPomodoros">3</div>
+                  <div class="stat-label">Pomodoros Completados</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-number" id="totalFocusTime">75</div>
+                  <div class="stat-label">Minutos de Enfoque</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-number" id="currentStreak">2</div>
+                  <div class="stat-label">Racha Actual</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="progreso" class="fade-in hidden">
+      <div class="ultra-card">
+        <div class="card-header-ultra">
+          <div class="card-icon-ultra">
+            <i class="bi bi-graph-up"></i>
+          </div>
+          <div>
+            <h2 class="card-title-ultra">Seguimiento de Progreso</h2>
+            <p class="card-subtitle-ultra">Visualiza tu rendimiento y mantente motivado</p>
+          </div>
+        </div>
+
+        <!-- Métricas Principales -->
+        <div class="ultra-grid ultra-grid-4 mb-4">
+          <div class="metric-card">
+            <div class="metric-icon">
+              <i class="bi bi-clock-fill"></i>
+            </div>
+            <div class="metric-info">
+              <div class="metric-value">125</div>
+              <div class="metric-label">Horas Esta Semana</div>
+              <div class="metric-change positive">+12% vs semana anterior</div>
+            </div>
+          </div>
+          
+          <div class="metric-card">
+            <div class="metric-icon">
+              <i class="bi bi-target"></i>
+            </div>
+            <div class="metric-info">
+              <div class="metric-value">85%</div>
+              <div class="metric-label">Meta Cumplida</div>
+              <div class="metric-change positive">+5% vs mes anterior</div>
+            </div>
+          </div>
+          
+          <div class="metric-card">
+            <div class="metric-icon">
+              <i class="bi bi-fire"></i>
+            </div>
+            <div class="metric-info">
+              <div class="metric-value">15</div>
+              <div class="metric-label">Días de Racha</div>
+              <div class="metric-change neutral">Récord personal</div>
+            </div>
+          </div>
+          
+          <div class="metric-card">
+            <div class="metric-icon">
+              <i class="bi bi-trophy-fill"></i>
+            </div>
+            <div class="metric-info">
+              <div class="metric-value">1,250</div>
+              <div class="metric-label">Puntos XP</div>
+              <div class="metric-change positive">+180 esta semana</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ultra-grid ultra-grid-2">
+          <!-- Gráfico de Progreso Semanal -->
+          <div class="ultra-card">
+            <h4 class="mb-3">Progreso Semanal</h4>
+            <div class="progress-chart">
+              <div class="chart-bars">
+                <div class="chart-bar">
+                  <div class="bar" style="height: 60%;" data-day="Lun" data-hours="3.2"></div>
+                  <span class="bar-label">L</span>
+                </div>
+                <div class="chart-bar">
+                  <div class="bar" style="height: 80%;" data-day="Mar" data-hours="4.1"></div>
+                  <span class="bar-label">M</span>
+                </div>
+                <div class="chart-bar">
+                  <div class="bar" style="height: 45%;" data-day="Mié" data-hours="2.8"></div>
+                  <span class="bar-label">X</span>
+                </div>
+                <div class="chart-bar">
+                  <div class="bar" style="height: 90%;" data-day="Jue" data-hours="4.5"></div>
+                  <span class="bar-label">J</span>
+                </div>
+                <div class="chart-bar">
+                  <div class="bar" style="height: 70%;" data-day="Vie" data-hours="3.7"></div>
+                  <span class="bar-label">V</span>
+                </div>
+                <div class="chart-bar">
+                  <div class="bar" style="height: 35%;" data-day="Sáb" data-hours="2.1"></div>
+                  <span class="bar-label">S</span>
+                </div>
+                <div class="chart-bar">
+                  <div class="bar" style="height: 50%;" data-day="Dom" data-hours="3.0"></div>
+                  <span class="bar-label">D</span>
+                </div>
+              </div>
+              <div class="chart-info">
+                <span class="chart-total">Total: 23.4 horas</span>
+                <span class="chart-average">Promedio: 3.3h/día</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Metas y Objetivos -->
+          <div class="ultra-card">
+            <h4 class="mb-3">Metas de Este Mes</h4>
+            <div class="goals-list">
+              <div class="goal-item">
+                <div class="goal-info">
+                  <span class="goal-name">Estudiar 100 horas</span>
+                  <span class="goal-progress-text">75/100 horas</span>
+                </div>
+                <div class="goal-progress-bar">
+                  <div class="goal-progress-fill" style="width: 75%;"></div>
+                </div>
+              </div>
+              
+              <div class="goal-item">
+                <div class="goal-info">
+                  <span class="goal-name">Completar 80 Pomodoros</span>
+                  <span class="goal-progress-text">62/80 pomodoros</span>
+                </div>
+                <div class="goal-progress-bar">
+                  <div class="goal-progress-fill" style="width: 77.5%;"></div>
+                </div>
+              </div>
+              
+              <div class="goal-item">
+                <div class="goal-info">
+                  <span class="goal-name">Mantener racha 20 días</span>
+                  <span class="goal-progress-text">15/20 días</span>
+                </div>
+                <div class="goal-progress-bar">
+                  <div class="goal-progress-fill" style="width: 75%;"></div>
+                </div>
+              </div>
+              
+              <div class="goal-item">
+                <div class="goal-info">
+                  <span class="goal-name">Alcanzar nivel 5</span>
+                  <span class="goal-progress-text">1,250/1,500 XP</span>
+                </div>
+                <div class="goal-progress-bar">
+                  <div class="goal-progress-fill" style="width: 83.3%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Análisis de Productividad -->
+        <div class="ultra-card mt-4">
+          <h4 class="mb-3">Análisis de Productividad</h4>
+          <div class="ultra-grid ultra-grid-3">
+            <div class="productivity-insight">
+              <div class="insight-icon">
+                <i class="bi bi-sun-fill text-warning"></i>
+              </div>
+              <div class="insight-content">
+                <h5>Mejor Hora del Día</h5>
+                <p>Eres más productivo entre las <strong>9:00 AM - 11:00 AM</strong></p>
+              </div>
+            </div>
+            
+            <div class="productivity-insight">
+              <div class="insight-icon">
+                <i class="bi bi-calendar-week text-info"></i>
+              </div>
+              <div class="insight-content">
+                <h5>Mejor Día de la Semana</h5>
+                <p>Los <strong>Jueves</strong> son tus días más productivos</p>
+              </div>
+            </div>
+            
+            <div class="productivity-insight">
+              <div class="insight-icon">
+                <i class="bi bi-lightning-fill text-success"></i>
+              </div>
+              <div class="insight-content">
+                <h5>Técnica Favorita</h5>
+                <p>La <strong>Técnica Pomodoro</strong> aumenta tu enfoque 40%</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Resto de secciones con estructura similar -->
+    <section id="gamificacion" class="fade-in hidden">
+      <div class="ultra-card">
+        <div class="card-header-ultra">
+          <div class="card-icon-ultra">
+            <i class="bi bi-trophy"></i>
+          </div>
+          <div>
+            <h2 class="card-title-ultra">Gamificación</h2>
+            <p class="card-subtitle-ultra">Convierte el estudio en una experiencia divertida</p>
+          </div>
+        </div>
+
+        <!-- Perfil del Jugador -->
+        <div class="ultra-card mb-4">
+          <div class="player-profile">
+            <div class="player-avatar">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80" alt="Avatar" class="avatar-img">
+              <div class="level-badge">5</div>
+            </div>
+            <div class="player-info">
+              <h3 class="player-name">Estudiante Élite</h3>
+              <p class="player-title">Maestro del Pomodoro</p>
+              <div class="xp-bar">
+                <div class="xp-fill" style="width: 83.3%;"></div>
+              </div>
+              <div class="xp-text">1,250 / 1,500 XP hasta el siguiente nivel</div>
+            </div>
+            <div class="player-stats">
+              <div class="stat-box">
+                <div class="stat-number">1,250</div>
+                <div class="stat-name">XP Total</div>
+              </div>
+              <div class="stat-box">
+                <div class="stat-number">15</div>
+                <div class="stat-name">Días Racha</div>
+              </div>
+              <div class="stat-box">
+                <div class="stat-number">42</div>
+                <div class="stat-name">Logros</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="ultra-grid ultra-grid-2">
+          <!-- Logros Recientes -->
+          <div class="ultra-card">
+            <h4 class="mb-3">Logros Recientes</h4>
+            <div class="achievements-list">
+              <div class="achievement-item unlocked">
+                <div class="achievement-icon">🔥</div>
+                <div class="achievement-info">
+                  <h5>Racha de Fuego</h5>
+                  <p>Estudia 15 días consecutivos</p>
+                  <span class="achievement-xp">+100 XP</span>
+                </div>
+                <div class="achievement-status">
+                  <i class="bi bi-check-circle-fill text-success"></i>
+                </div>
+              </div>
+              
+              <div class="achievement-item unlocked">
+                <div class="achievement-icon">⏰</div>
+                <div class="achievement-info">
+                  <h5>Maestro del Tiempo</h5>
+                  <p>Completa 50 sesiones Pomodoro</p>
+                  <span class="achievement-xp">+75 XP</span>
+                </div>
+                <div class="achievement-status">
+                  <i class="bi bi-check-circle-fill text-success"></i>
+                </div>
+              </div>
+              
+              <div class="achievement-item unlocked">
+                <div class="achievement-icon">📚</div>
+                <div class="achievement-info">
+                  <h5>Devorador de Libros</h5>
+                  <p>Estudia 100 horas en total</p>
+                  <span class="achievement-xp">+150 XP</span>
+                </div>
+                <div class="achievement-status">
+                  <i class="bi bi-check-circle-fill text-success"></i>
+                </div>
+              </div>
+              
+              <div class="achievement-item locked">
+                <div class="achievement-icon">🎯</div>
+                <div class="achievement-info">
+                  <h5>Precisión Perfecta</h5>
+                  <p>Cumple todas las metas semanales por un mes</p>
+                  <span class="achievement-xp">+200 XP</span>
+                </div>
+                <div class="achievement-status">
+                  <i class="bi bi-lock-fill text-muted"></i>
+                </div>
+              </div>
+              
+              <div class="achievement-item locked">
+                <div class="achievement-icon">👑</div>
+                <div class="achievement-info">
+                  <h5>Rey del Estudio</h5>
+                  <p>Alcanza el nivel 10</p>
+                  <span class="achievement-xp">+500 XP</span>
+                </div>
+                <div class="achievement-status">
+                  <i class="bi bi-lock-fill text-muted"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Desafíos Semanales -->
+          <div class="ultra-card">
+            <h4 class="mb-3">Desafíos Semanales</h4>
+            <div class="challenges-list">
+              <div class="challenge-item">
+                <div class="challenge-header">
+                  <div class="challenge-icon">🎯</div>
+                  <div class="challenge-info">
+                    <h5>Pomodoros Perfectos</h5>
+                    <p>Completa 25 sesiones Pomodoro esta semana</p>
+                  </div>
+                  <div class="challenge-reward">+150 XP</div>
+                </div>
+                <div class="challenge-progress">
+                  <div class="progress-bar">
+                    <div class="progress-fill" style="width: 72%;"></div>
+                  </div>
+                  <span class="progress-text">18/25 completados</span>
+                </div>
+              </div>
+              
+              <div class="challenge-item">
+                <div class="challenge-header">
+                  <div class="challenge-icon">⚡</div>
+                  <div class="challenge-info">
+                    <h5>Sprint de Estudio</h5>
+                    <p>Estudia 35 horas esta semana</p>
+                  </div>
+                  <div class="challenge-reward">+200 XP</div>
+                </div>
+                <div class="challenge-progress">
+                  <div class="progress-bar">
+                    <div class="progress-fill" style="width: 85.7%;"></div>
+                  </div>
+                  <span class="progress-text">30/35 horas</span>
+                </div>
+              </div>
+              
+              <div class="challenge-item">
+                <div class="challenge-header">
+                  <div class="challenge-icon">🔗</div>
+                  <div class="challenge-info">
+                    <h5>Cadena Inquebrantable</h5>
+                    <p>Estudia todos los días de la semana</p>
+                  </div>
+                  <div class="challenge-reward">+100 XP</div>
+                </div>
+                <div class="challenge-progress">
+                  <div class="progress-bar">
+                    <div class="progress-fill" style="width: 71.4%;"></div>
+                  </div>
+                  <span class="progress-text">5/7 días</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sistema de Rankings -->
+        <div class="ultra-card mt-4">
+          <h4 class="mb-3">Tabla de Clasificación Semanal</h4>
+          <div class="leaderboard">
+            <div class="leaderboard-item rank-1">
+              <div class="rank-number">1</div>
+              <div class="player-info">
+                <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?auto=format&fit=crop&w=50&q=80" alt="Player" class="player-thumb">
+                <div class="player-details">
+                  <span class="player-name">Ana García</span>
+                  <span class="player-score">2,450 XP</span>
+                </div>
+              </div>
+              <div class="rank-badge gold">👑</div>
+            </div>
+            
+            <div class="leaderboard-item rank-2">
+              <div class="rank-number">2</div>
+              <div class="player-info">
+                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=50&q=80" alt="Player" class="player-thumb">
+                <div class="player-details">
+                  <span class="player-name">Carlos López</span>
+                  <span class="player-score">2,180 XP</span>
+                </div>
+              </div>
+              <div class="rank-badge silver">🥈</div>
+            </div>
+            
+            <div class="leaderboard-item rank-3">
+              <div class="rank-number">3</div>
+              <div class="player-info">
+                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=50&q=80" alt="Player" class="player-thumb">
+                <div class="player-details">
+                  <span class="player-name">María Rodríguez</span>
+                  <span class="player-score">1,890 XP</span>
+                </div>
+              </div>
+              <div class="rank-badge bronze">🥉</div>
+            </div>
+            
+            <div class="leaderboard-item current-user">
+              <div class="rank-number">7</div>
+              <div class="player-info">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=50&q=80" alt="Player" class="player-thumb">
+                <div class="player-details">
+                  <span class="player-name">Tú</span>
+                  <span class="player-score">1,250 XP</span>
+                </div>
+              </div>
+              <div class="rank-badge current">⭐</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="colaborativo" class="fade-in hidden">
+      <div class="ultra-card">
+        <div class="card-header-ultra">
+          <div class="card-icon-ultra">
+            <i class="bi bi-people"></i>
+          </div>
+          <div>
+            <h2 class="card-title-ultra">Estudio Colaborativo</h2>
+            <p class="card-subtitle-ultra">Aprende y crece junto a otros estudiantes</p>
+          </div>
+        </div>
+
+        <div class="ultra-grid ultra-grid-2">
+          <!-- Salas de Estudio Activas -->
+          <div class="ultra-card">
+            <h4 class="mb-3">Salas de Estudio Activas</h4>
+            <div class="study-rooms">
+              <div class="room-item">
+                <div class="room-header">
+                  <div class="room-icon">📚</div>
+                  <div class="room-info">
+                    <h5>Matemáticas Avanzadas</h5>
+                    <p>Cálculo y Álgebra Lineal</p>
+                  </div>
+                  <div class="room-members">
+                    <span class="member-count">12 estudiantes</span>
+                    <div class="member-avatars">
+                      <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?auto=format&fit=crop&w=30&q=80" alt="Member" class="member-avatar">
+                      <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=30&q=80" alt="Member" class="member-avatar">
+                      <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=30&q=80" alt="Member" class="member-avatar">
+                      <span class="more-members">+9</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="room-actions">
+                  <button class="btn-ultra btn-sm">Unirse</button>
+                  <span class="room-status online">En línea</span>
+                </div>
+              </div>
+              
+              <div class="room-item">
+                <div class="room-header">
+                  <div class="room-icon">🧪</div>
+                  <div class="room-info">
+                    <h5>Química Orgánica</h5>
+                    <p>Preparación para examen</p>
+                  </div>
+                  <div class="room-members">
+                    <span class="member-count">8 estudiantes</span>
+                    <div class="member-avatars">
+                      <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=30&q=80" alt="Member" class="member-avatar">
+                      <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=30&q=80" alt="Member" class="member-avatar">
+                      <span class="more-members">+6</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="room-actions">
+                  <button class="btn-ultra btn-sm">Unirse</button>
+                  <span class="room-status online">En línea</span>
+                </div>
+              </div>
+              
+              <div class="room-item">
+                <div class="room-header">
+                  <div class="room-icon">🏛️</div>
+                  <div class="room-info">
+                    <h5>Historia Universal</h5>
+                    <p>Siglo XX y guerras mundiales</p>
+                  </div>
+                  <div class="room-members">
+                    <span class="member-count">15 estudiantes</span>
+                    <div class="member-avatars">
+                      <img src="https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?auto=format&fit=crop&w=30&q=80" alt="Member" class="member-avatar">
+                      <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=30&q=80" alt="Member" class="member-avatar">
+                      <img src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=30&q=80" alt="Member" class="member-avatar">
+                      <span class="more-members">+12</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="room-actions">
+                  <button class="btn-ultra btn-sm">Unirse</button>
+                  <span class="room-status online">En línea</span>
+                </div>
+              </div>
+            </div>
+            
+            <button class="btn-secondary-ultra w-100 mt-3">
+              <i class="bi bi-plus-circle"></i> Crear Nueva Sala
+            </button>
+          </div>
+
+          <!-- Chat y Colaboración -->
+          <div class="ultra-card">
+            <h4 class="mb-3">Chat Global - Sala General</h4>
+            <div class="chat-container">
+              <div class="chat-messages" id="chatMessages">
+                <div class="message">
+                  <div class="message-avatar">
+                    <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?auto=format&fit=crop&w=40&q=80" alt="Ana" class="avatar">
+                  </div>
+                  <div class="message-content">
+                    <div class="message-header">
+                      <span class="message-author">Ana García</span>
+                      <span class="message-time">hace 5 min</span>
+                    </div>
+                    <div class="message-text">¿Alguien puede ayudarme con ecuaciones diferenciales? 🤔</div>
+                  </div>
+                </div>
+                
+                <div class="message">
+                  <div class="message-avatar">
+                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=40&q=80" alt="Carlos" class="avatar">
+                  </div>
+                  <div class="message-content">
+                    <div class="message-header">
+                      <span class="message-author">Carlos López</span>
+                      <span class="message-time">hace 3 min</span>
+                    </div>
+                    <div class="message-text">¡Claro! ¿Qué parte específicamente te cuesta más?</div>
+                  </div>
+                </div>
+                
+                <div class="message">
+                  <div class="message-avatar">
+                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=40&q=80" alt="María" class="avatar">
+                  </div>
+                  <div class="message-content">
+                    <div class="message-header">
+                      <span class="message-author">María Rodríguez</span>
+                      <span class="message-time">hace 2 min</span>
+                    </div>
+                    <div class="message-text">Yo también estoy estudiando eso. ¿Formamos un grupo de estudio? 📚</div>
+                  </div>
+                </div>
+                
+                <div class="message own">
+                  <div class="message-content">
+                    <div class="message-header">
+                      <span class="message-author">Tú</span>
+                      <span class="message-time">hace 1 min</span>
+                    </div>
+                    <div class="message-text">¡Excelente idea! Podemos usar la sala de Matemáticas 💪</div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="chat-input">
+                <input type="text" class="form-ultra" placeholder="Escribe tu mensaje..." id="chatInput">
+                <button class="btn-ultra" id="sendMessage">
+                  <i class="bi bi-send"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recursos Compartidos -->
+        <div class="ultra-card mt-4">
+          <h4 class="mb-3">Recursos Compartidos</h4>
+          <div class="ultra-grid ultra-grid-3">
+            <div class="resource-item">
+              <div class="resource-icon">📄</div>
+              <div class="resource-info">
+                <h5>Apuntes de Cálculo</h5>
+                <p>Compartido por Ana García</p>
+                <span class="resource-meta">PDF • 2.5 MB • hace 2 horas</span>
+              </div>
+              <div class="resource-actions">
+                <button class="btn-secondary-ultra btn-sm">
+                  <i class="bi bi-download"></i>
+                </button>
+                <button class="btn-secondary-ultra btn-sm">
+                  <i class="bi bi-heart"></i>
+                </button>
+              </div>
+            </div>
+            
+            <div class="resource-item">
+              <div class="resource-icon">🎥</div>
+              <div class="resource-info">
+                <h5>Video: Derivadas</h5>
+                <p>Compartido por Carlos López</p>
+                <span class="resource-meta">MP4 • 45 min • hace 1 día</span>
+              </div>
+              <div class="resource-actions">
+                <button class="btn-secondary-ultra btn-sm">
+                  <i class="bi bi-play"></i>
+                </button>
+                <button class="btn-secondary-ultra btn-sm">
+                  <i class="bi bi-heart-fill text-danger"></i>
+                </button>
+              </div>
+            </div>
+            
+            <div class="resource-item">
+              <div class="resource-icon">📊</div>
+              <div class="resource-info">
+                <h5>Ejercicios Resueltos</h5>
+                <p>Compartido por María Rodríguez</p>
+                <span class="resource-meta">DOCX • 1.8 MB • hace 3 días</span>
+              </div>
+              <div class="resource-actions">
+                <button class="btn-secondary-ultra btn-sm">
+                  <i class="bi bi-download"></i>
+                </button>
+                <button class="btn-secondary-ultra btn-sm">
+                  <i class="bi bi-heart"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <button class="btn-secondary-ultra mt-3">
+            <i class="bi bi-cloud-upload"></i> Compartir Recurso
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <section id="calendario" class="fade-in hidden">
+      <div class="ultra-card">
+        <div class="card-header-ultra">
+          <div class="card-icon-ultra">
+            <i class="bi bi-calendar-event"></i>
+          </div>
+          <div>
+            <h2 class="card-title-ultra">Calendario de Estudio</h2>
+            <p class="card-subtitle-ultra">Planifica y organiza tus sesiones de estudio</p>
+          </div>
+        </div>
+
+        <div class="ultra-grid ultra-grid-3">
+          <div class="ultra-card">
+            <h4 class="mb-3">Esta Semana</h4>
+            <div class="week-view">
+              <div class="day-card today">
+                <div class="day-header">Hoy - Lun 7</div>
+                <div class="events">
+                  <div class="event math">Matemáticas - 9:00 AM</div>
+                  <div class="event physics">Física - 2:00 PM</div>
+                </div>
+              </div>
+              <div class="day-card">
+                <div class="day-header">Mar 8</div>
+                <div class="events">
+                  <div class="event chemistry">Química - 10:00 AM</div>
+                </div>
+              </div>
+              <div class="day-card">
+                <div class="day-header">Mié 9</div>
+                <div class="events">
+                  <div class="event history">Historia - 3:00 PM</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="ultra-card">
+            <h4 class="mb-3">Próximos Eventos</h4>
+            <div class="events-list">
+              <div class="event-item urgent">
+                <div class="event-dot"></div>
+                <div class="event-info">
+                  <h5>Examen de Cálculo</h5>
+                  <p>Mañana 9:00 AM</p>
+                </div>
+              </div>
+              <div class="event-item normal">
+                <div class="event-dot"></div>
+                <div class="event-info">
+                  <h5>Entrega de Ensayo</h5>
+                  <p>Viernes 11:59 PM</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="ultra-card">
+            <h4 class="mb-3">Crear Evento</h4>
+            <form class="quick-event-form">
+              <input type="text" class="form-ultra mb-2" placeholder="Título del evento">
+              <input type="datetime-local" class="form-ultra mb-2">
+              <button type="submit" class="btn-ultra w-100">Crear</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="planes" class="fade-in hidden">
+      <div class="ultra-card">
+        <div class="card-header-ultra">
+          <div class="card-icon-ultra">
+            <i class="bi bi-star"></i>
+          </div>
+          <div>
+            <h2 class="card-title-ultra">Planes de Suscripción</h2>
+            <p class="card-subtitle-ultra">Elige el plan que mejor se adapte a tus necesidades</p>
+          </div>
+        </div>
+
+        <div class="ultra-grid ultra-grid-3">
+          <div class="plan-card basic">
+            <h3>Básico</h3>
+            <div class="price">Gratis</div>
+            <ul class="features">
+              <li>✓ Técnica Pomodoro básica</li>
+              <li>✓ Estadísticas básicas</li>
+              <li>✓ 3 salas de estudio</li>
+              <li>✗ Gamificación avanzada</li>
+            </ul>
+            <button class="btn-secondary-ultra w-100">Plan Actual</button>
+          </div>
+
+          <div class="plan-card pro popular">
+            <div class="popular-badge">Popular</div>
+            <h3>Pro</h3>
+            <div class="price">$9.99<span>/mes</span></div>
+            <ul class="features">
+              <li>✓ Todo lo del plan Básico</li>
+              <li>✓ Gamificación completa</li>
+              <li>✓ Salas ilimitadas</li>
+              <li>✓ Análisis avanzados</li>
+            </ul>
+            <button class="btn-ultra w-100" onclick="openPaymentModal('pro', 9.99)">Actualizar a Pro</button>
+          </div>
+
+          <div class="plan-card premium">
+            <h3>Premium</h3>
+            <div class="price">$19.99<span>/mes</span></div>
+            <ul class="features">
+              <li>✓ Todo lo del plan Pro</li>
+              <li>✓ AI Study Assistant</li>
+              <li>✓ Mentorías personales</li>
+              <li>✓ Certificados oficiales</li>
+            </ul>
+            <button class="btn-ultra w-100" onclick="openPaymentModal('premium', 19.99)">Actualizar a Premium</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contacto" class="fade-in hidden">
+      <div class="ultra-card">
+        <div class="card-header-ultra">
+          <div class="card-icon-ultra">
+            <i class="bi bi-envelope"></i>
+          </div>
+          <div>
+            <h2 class="card-title-ultra">Contacto</h2>
+            <p class="card-subtitle-ultra">¿Tienes preguntas? Estamos aquí para ayudarte</p>
+          </div>
+        </div>
+
+        <div class="ultra-grid ultra-grid-2">
+          <div class="ultra-card">
+            <h4 class="mb-3">Envíanos un Mensaje</h4>
+            <form class="contact-form">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <input type="text" class="form-ultra" placeholder="Tu nombre" required>
+                </div>
+                <div class="col-md-6">
+                  <input type="email" class="form-ultra" placeholder="Tu email" required>
+                </div>
+                <div class="col-12">
+                  <select class="form-ultra">
+                    <option>Tipo de consulta</option>
+                    <option>Soporte técnico</option>
+                    <option>Facturación</option>
+                    <option>Sugerencias</option>
+                  </select>
+                </div>
+                <div class="col-12">
+                  <textarea class="form-ultra" rows="4" placeholder="Tu mensaje"></textarea>
+                </div>
+                <div class="col-12">
+                  <button type="submit" class="btn-ultra">Enviar Mensaje</button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <div class="ultra-card">
+            <h4 class="mb-3">Información de Contacto</h4>
+            <div class="contact-info">
+              <div class="contact-item">
+                <i class="bi bi-envelope-fill"></i>
+                <div>
+                  <h5>Email</h5>
+                  <p>soporte@studytrack.com</p>
+                </div>
+              </div>
+              <div class="contact-item">
+                <i class="bi bi-chat-dots-fill"></i>
+                <div>
+                  <h5>Chat en Vivo</h5>
+                  <p>Lun-Vie 9:00-18:00</p>
+                </div>
+              </div>
+              <div class="contact-item">
+                <i class="bi bi-question-circle-fill"></i>
+                <div>
+                  <h5>FAQ</h5>
+                  <p>Preguntas frecuentes</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Libro de Reclamaciones -->
+    <section id="reclamaciones" class="fade-in hidden">
+      <div class="ultra-card">
+        <div class="card-header-ultra">
+          <div class="card-icon-ultra">
+            <i class="bi bi-journal-text"></i>
+          </div>
+          <div>
+            <h2 class="card-title-ultra">Libro de Reclamaciones</h2>
+            <p class="card-subtitle-ultra">Presenta tu reclamo o sugerencia de manera oficial</p>
+          </div>
+        </div>
+
+        <div class="ultra-grid ultra-grid-2">
+          <!-- Formulario de Reclamo -->
+          <div class="ultra-card">
+            <h4 class="mb-3">Nuevo Reclamo/Sugerencia</h4>
+            <form class="claims-form" id="claimsForm">
+              <div class="row g-3">
+                <div class="col-12">
+                  <label class="form-label">Tipo de Solicitud *</label>
+                  <select class="form-ultra" id="claimType" required>
+                    <option value="">Seleccione tipo</option>
+                    <option value="reclamo">Reclamo</option>
+                    <option value="queja">Queja</option>
+                    <option value="sugerencia">Sugerencia</option>
+                    <option value="felicitacion">Felicitación</option>
+                  </select>
+                </div>
+                
+                <div class="col-md-6">
+                  <label class="form-label">Nombres *</label>
+                  <input type="text" class="form-ultra" id="claimName" required>
+                </div>
+                
+                <div class="col-md-6">
+                  <label class="form-label">Apellidos *</label>
+                  <input type="text" class="form-ultra" id="claimLastName" required>
+                </div>
+                
+                <div class="col-md-6">
+                  <label class="form-label">Tipo de Documento *</label>
+                  <select class="form-ultra" id="docType" required>
+                    <option value="">Seleccione</option>
+                    <option value="dni">DNI</option>
+                    <option value="ce">Carné de Extranjería</option>
+                    <option value="pasaporte">Pasaporte</option>
+                  </select>
+                </div>
+                
+                <div class="col-md-6">
+                  <label class="form-label">Número de Documento *</label>
+                  <input type="text" class="form-ultra" id="docNumber" required>
+                </div>
+                
+                <div class="col-md-6">
+                  <label class="form-label">Email *</label>
+                  <input type="email" class="form-ultra" id="claimEmail" required>
+                </div>
+                
+                <div class="col-md-6">
+                  <label class="form-label">Teléfono</label>
+                  <input type="tel" class="form-ultra" id="claimPhone">
+                </div>
+                
+                <div class="col-12">
+                  <label class="form-label">Dirección</label>
+                  <input type="text" class="form-ultra" id="claimAddress">
+                </div>
+                
+                <div class="col-md-6">
+                  <label class="form-label">Departamento</label>
+                  <select class="form-ultra" id="claimDepartment">
+                    <option value="">Seleccione</option>
+                    <option value="lima">Lima</option>
+                    <option value="arequipa">Arequipa</option>
+                    <option value="cusco">Cusco</option>
+                    <option value="piura">Piura</option>
+                    <option value="otro">Otro</option>
+                  </select>
+                </div>
+                
+                <div class="col-md-6">
+                  <label class="form-label">Provincia</label>
+                  <input type="text" class="form-ultra" id="claimProvince">
+                </div>
+                
+                <div class="col-12">
+                  <label class="form-label">Detalle del Reclamo/Sugerencia *</label>
+                  <textarea class="form-ultra" rows="5" id="claimDetail" required 
+                    placeholder="Describa detalladamente su reclamo, queja, sugerencia o felicitación..."></textarea>
+                </div>
+                
+                <div class="col-12">
+                  <label class="form-label">Pedido del Consumidor</label>
+                  <textarea class="form-ultra" rows="3" id="claimRequest" 
+                    placeholder="¿Qué solicita como solución a su reclamo?"></textarea>
+                </div>
+                
+                <div class="col-12">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="claimAccept" required>
+                    <label class="form-check-label small" for="claimAccept">
+                      Acepto que mis datos sean utilizados para el procesamiento de este reclamo y autorizo su uso según la Ley de Protección de Datos Personales.
+                    </label>
+                  </div>
+                </div>
+                
+                <div class="col-12">
+                  <button type="submit" class="btn-ultra w-100">
+                    <i class="bi bi-send"></i> Enviar Reclamo
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <!-- Información Legal y Estado -->
+          <div>
+            <div class="ultra-card mb-3">
+              <h4 class="mb-3">Información Legal</h4>
+              <div class="legal-info">
+                <div class="legal-item">
+                  <i class="bi bi-info-circle text-info"></i>
+                  <div>
+                    <h5>Resolución</h5>
+                    <p>Plazo máximo: 30 días calendario</p>
+                  </div>
+                </div>
+                
+                <div class="legal-item">
+                  <i class="bi bi-shield-check text-success"></i>
+                  <div>
+                    <h5>Protección de Datos</h5>
+                    <p>Sus datos están protegidos según la Ley N° 29733</p>
+                  </div>
+                </div>
+                
+                <div class="legal-item">
+                  <i class="bi bi-telephone text-warning"></i>
+                  <div>
+                    <h5>INDECOPI</h5>
+                    <p>Línea gratuita: 224-7777</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="ultra-card">
+              <h4 class="mb-3">Mis Reclamos</h4>
+              <div class="claims-history" id="claimsHistory">
+                <div class="claim-item">
+                  <div class="claim-header">
+                    <span class="claim-id">#REC-2024-001</span>
+                    <span class="claim-status status-pending">En Proceso</span>
+                  </div>
+                  <div class="claim-info">
+                    <h5>Problema con acceso a funciones premium</h5>
+                    <p class="claim-date">Fecha: 05/01/2024</p>
+                    <p class="claim-type">Tipo: Reclamo</p>
+                  </div>
+                </div>
+                
+                <div class="claim-item">
+                  <div class="claim-header">
+                    <span class="claim-id">#SUG-2024-002</span>
+                    <span class="claim-status status-resolved">Resuelto</span>
+                  </div>
+                  <div class="claim-info">
+                    <h5>Sugerencia para mejorar el timer Pomodoro</h5>
+                    <p class="claim-date">Fecha: 28/12/2023</p>
+                    <p class="claim-type">Tipo: Sugerencia</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Notification Bar -->
+  <div class="notification-ultra" id="notificationBar">
+    <div class="notification-icon-ultra">
+      <i class="bi bi-info-circle"></i>
+    </div>
+    <div class="notification-content-ultra" id="notificationContent">
+      ¡Bienvenido a StudyTrack!
+    </div>
+    <button class="notification-close-ultra" id="closeNotification">
+      <i class="bi bi-x"></i>
+    </button>
+  </div>
+
+  <!-- Payment Modal -->
+  <div id="paymentModal" class="modal-ultra">
+    <div class="modal-card-ultra payment-modal">
+      <div class="modal-header-ultra">
+        <div class="modal-logo-ultra">
+          <i class="bi bi-credit-card"></i>
+        </div>
+        <h2 class="modal-title-ultra">Confirmar Suscripción</h2>
+        <p class="modal-subtitle-ultra" id="paymentPlanInfo">Plan Pro - $9.99/mes</p>
+        <button class="modal-close" onclick="closePaymentModal()">
+          <i class="bi bi-x"></i>
+        </button>
+      </div>
+
+      <div class="payment-content">
+        <!-- Métodos de Pago -->
+        <div class="payment-methods mb-4">
+          <h4 class="mb-3">Seleccionar Método de Pago</h4>
+          <div class="payment-options">
+            <div class="payment-option active" data-method="card">
+              <i class="bi bi-credit-card"></i>
+              <span>Tarjeta de Crédito/Débito</span>
+            </div>
+            <div class="payment-option" data-method="paypal">
+              <i class="bi bi-paypal"></i>
+              <span>PayPal</span>
+            </div>
+            <div class="payment-option" data-method="yape">
+              <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiByeD0iNCIgZmlsbD0iIzc0MmY4OSIvPgo8dGV4dCB4PSIxMiIgeT0iMTUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxMCIgZm9udC13ZWlnaHQ9ImJvbGQiIGZpbGw9IndoaXRlIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5ZPC90ZXh0Pgo8L3N2Zz4K" alt="Yape" style="width: 20px;">
+              <span>Yape</span>
+            </div>
+            <div class="payment-option" data-method="plin">
+              <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiByeD0iNCIgZmlsbD0iIzAwYWE0NSIvPgo8dGV4dCB4PSIxMiIgeT0iMTUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSI5IiBmb250LXdlaWdodD0iYm9sZCIgZmlsbD0id2hpdGUiIHRleHQtYW5jaG9yPSJtaWRkbGUiPlBMPC90ZXh0Pgo8L3N2Zz4K" alt="Plin" style="width: 20px;">
+              <span>Plin</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Formulario de Tarjeta -->
+        <div class="payment-form" id="cardForm">
+          <form id="paymentFormCard">
+            <div class="row g-3">
+              <div class="col-12">
+                <label class="form-label">Número de Tarjeta</label>
+                <input type="text" class="form-ultra" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Fecha de Vencimiento</label>
+                <input type="text" class="form-ultra" id="cardExpiry" placeholder="MM/AA" maxlength="5">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">CVV</label>
+                <input type="text" class="form-ultra" id="cardCvv" placeholder="123" maxlength="4">
+              </div>
+              <div class="col-12">
+                <label class="form-label">Nombre del Titular</label>
+                <input type="text" class="form-ultra" id="cardName" placeholder="Nombre como aparece en la tarjeta">
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <!-- PayPal -->
+        <div class="payment-form hidden" id="paypalForm">
+          <div class="paypal-info">
+            <i class="bi bi-paypal" style="font-size: 3rem; color: #0070ba;"></i>
+            <h4>PayPal</h4>
+            <p>Serás redirigido a PayPal para completar el pago de forma segura.</p>
+            <button class="btn-ultra w-100">
+              <i class="bi bi-paypal"></i> Continuar con PayPal
+            </button>
+          </div>
+        </div>
+
+        <!-- Yape -->
+        <div class="payment-form hidden" id="yapeForm">
+          <div class="qr-payment">
+            <h4>Pagar con Yape</h4>
+            <div class="qr-code">
+              <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2ZmZiIvPgogIDx0ZXh0IHg9IjEwMCIgeT0iMTAwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiMzMzMiPkNSIFlhcGU8L3RleHQ+CiAgPHJlY3QgeD0iMjAiIHk9IjIwIiB3aWR0aD0iMTYwIiBoZWlnaHQ9IjE2MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjIiLz4KPC9zdmc+" alt="QR Yape" style="width: 150px; height: 150px;">
+            </div>
+            <p class="text-center">Escanea el código QR con tu app Yape</p>
+            <div class="amount-display">Monto: S/ <span id="yapeAmount">27.97</span></div>
+          </div>
+        </div>
+
+        <!-- Plin -->
+        <div class="payment-form hidden" id="plinForm">
+          <div class="qr-payment">
+            <h4>Pagar con Plin</h4>
+            <div class="qr-code">
+              <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgZmlsbD0iI2ZmZiIvPgogIDx0ZXh0IHg9IjEwMCIgeT0iMTAwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IiMzMzMiPkNSIFBsaW48L3RleHQ+CiAgPHJlY3QgeD0iMjAiIHk9IjIwIiB3aWR0aD0iMTYwIiBoZWlnaHQ9IjE2MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjIiLz4KPC9zdmc+" alt="QR Plin" style="width: 150px; height: 150px;">
+            </div>
+            <p class="text-center">Escanea el código QR con tu app Plin</p>
+            <div class="amount-display">Monto: S/ <span id="plinAmount">27.97</span></div>
+          </div>
+        </div>
+
+        <!-- Resumen del Pedido -->
+        <div class="order-summary">
+          <h4>Resumen del Pedido</h4>
+          <div class="summary-item">
+            <span>Plan <span id="summaryPlan">Pro</span></span>
+            <span>$<span id="summaryPrice">9.99</span>/mes</span>
+          </div>
+          <div class="summary-item">
+            <span>Impuestos (18%)</span>
+            <span>$<span id="summaryTax">1.80</span></span>
+          </div>
+          <div class="summary-total">
+            <span>Total</span>
+            <span>$<span id="summaryTotal">11.79</span></span>
+          </div>
+        </div>
+
+        <!-- Botones de Acción -->
+        <div class="payment-actions">
+          <button class="btn-secondary-ultra" onclick="closePaymentModal()">Cancelar</button>
+          <button class="btn-ultra" id="processPaymentBtn" onclick="processPayment()">
+            <i class="bi bi-lock-fill"></i> Procesar Pago
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Variables de estado
+    let isAppStarted = false;
+    let currentMascotAnimation = 'bounce-float';
+    let currentNavIndex = 0;
+    let lastSection = 'inicio'; // Tracking de la última sección para la mascota
+
+    // Obtener elementos DOM
+    const menuToggle = document.getElementById('menuToggle');
+    const themeToggle = document.getElementById('themeToggle');
+    const sidebar = document.getElementById('sidebar');
+    const mainContent = document.getElementById('mainContent');
+    const landingPage = document.getElementById('landingPage');
+    const loginModal = document.getElementById('loginModal');
+    const startBtn = document.getElementById('startBtn');
+    const loginForm = document.getElementById('loginForm');
+    const sidebarNav = document.getElementById('sidebarNav');
+    const navUp = document.getElementById('navUp');
+    const navDown = document.getElementById('navDown');
+    const streakMascot = document.getElementById('streakMascot');
+    const notificationBar = document.getElementById('notificationBar');
+    const notificationContent = document.getElementById('notificationContent');
+    const closeNotification = document.getElementById('closeNotification');
+
+    // Toggle de tema claro/oscuro
+    themeToggle.addEventListener('click', () => {
+      const html = document.documentElement;
+      const isDarkMode = html.classList.contains('dark-mode');
+      
+      if (isDarkMode) {
+        html.classList.remove('dark-mode');
+        html.classList.add('light-mode');
+        themeToggle.innerHTML = '<i class="bi bi-moon-fill"></i>';
+        showNotification('Modo claro activado');
+      } else {
+        html.classList.remove('light-mode');
+        html.classList.add('dark-mode');
+        themeToggle.innerHTML = '<i class="bi bi-sun-fill"></i>';
+        showNotification('Modo oscuro activado');
+      }
+    });
+
+    // Menu toggle
+    menuToggle.addEventListener('click', () => {
+      if (!isAppStarted) return;
+      
+      sidebar.classList.toggle('show');
+      mainContent.classList.toggle('sidebar-open');
+    });
+
+    // Close sidebar when clicking outside on mobile
+    document.addEventListener('click', (e) => {
+      if (window.innerWidth <= 768 && sidebar.classList.contains('show')) {
+        if (!sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
+          sidebar.classList.remove('show');
+          mainContent.classList.remove('sidebar-open');
+        }
+      }
+    });
+
+    // Start button functionality
+    startBtn.addEventListener('click', () => {
+      landingPage.style.display = 'none';
+      loginModal.classList.add('show');
+      // Asegurar que la mascota de racha sea visible
+      streakMascot.style.display = 'flex';
+    });
+
+    // Login form functionality
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      // Simulate login process
+      setTimeout(() => {
+        loginModal.classList.remove('show');
+        isAppStarted = true;
+        
+        // Show main app
+        mainContent.style.display = 'block';
+        if (window.innerWidth > 768) {
+          sidebar.classList.add('show');
+          mainContent.classList.add('sidebar-open');
+        }
+        
+        // Asegurar que la mascota esté visible
+        if (streakMascot) {
+          streakMascot.style.display = 'flex';
+        }
+        
+        // Show first section
+        showSection('inicio');
+        showNotification('¡Bienvenido a StudyTrack! Diseño ultra moderno activado.');
+      }, 500);
+    });
+
+    // Navigation functionality
+    function showSection(sectionId) {
+      // Guardar la sección anterior para animación suave de la mascota
+      const previousSection = lastSection;
+      lastSection = sectionId;
+      
+      // Hide all sections
+      const sections = document.querySelectorAll('main section');
+      sections.forEach(section => {
+        section.classList.add('hidden');
+      });
+
+      // Show selected section
+      const targetSection = document.getElementById(sectionId);
+      if (targetSection) {
+        targetSection.classList.remove('hidden');
+        targetSection.classList.add('fade-in');
+        
+        // Animar transición de la mascota entre secciones
+        animateMascotTransition(previousSection, sectionId);
+        
+        // Change mascot animation based on section
+        updateMascotBasedOnSection(sectionId);
+        
+        // Mostrar notificación del cambio de sección
+        showNotification(`Sección ${sectionId} activada`);
+      }
+
+      // Update active nav link
+      const navLinks = document.querySelectorAll('.nav-link');
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+      });
+
+      const activeLink = document.querySelector(`[href="#${sectionId}"]`);
+      if (activeLink) {
+        activeLink.classList.add('active');
+        
+        // Ensure the active link is visible in the sidebar
+        if (sidebarNav) {
+          const linkTop = activeLink.offsetTop;
+          sidebarNav.scrollTop = linkTop - 100;
+        }
+      }
+
+      // Close sidebar on mobile
+      if (window.innerWidth <= 768) {
+        sidebar.classList.remove('show');
+        mainContent.classList.remove('sidebar-open');
+      }
+      
+      // Asegurar que la mascota de racha esté visible siempre
+      const streakMascotElement = document.getElementById('streakMascot');
+      if (streakMascotElement) {
+        streakMascotElement.style.display = 'flex';
+        streakMascotElement.style.visibility = 'visible';
+        streakMascotElement.style.opacity = '1';
+      }
+    }
+    
+    // Función para animar la transición de la mascota entre secciones
+    function animateMascotTransition(fromSection, toSection) {
+      const mascotContainer = document.getElementById('streakMascot');
+      if (!mascotContainer) return;
+      
+      // Efecto de desaparición y reaparición
+      mascotContainer.style.transform = 'scale(0.8) translateY(10px)';
+      mascotContainer.style.opacity = '0.7';
+      
+      setTimeout(() => {
+        mascotContainer.style.transform = 'scale(1) translateY(0)';
+        mascotContainer.style.opacity = '1';
+      }, 300);
+    }
+
+    // Update mascot animation based on current section
+    function updateMascotBasedOnSection(sectionId) {
+      const faceElement = document.querySelector('.streak-mascot .face');
+      const containerElement = document.getElementById('streakMascot');
+      const streakCount = containerElement.querySelector('.streak-count');
+      const mascotElement = containerElement.querySelector('.streak-mascot');
+      
+      // Asegurar que la mascota sea visible con una animación de entrada
+      containerElement.style.display = 'flex';
+      containerElement.style.opacity = '1';
+      
+      // Efecto visual al cambiar de sección
+      containerElement.style.transform = 'scale(1.2)';
+      setTimeout(() => {
+        containerElement.style.transform = 'scale(1)';
+      }, 300);
+      
+      // Remove all animation classes
+      containerElement.classList.remove('bounce-float', 'wiggle', 'excited');
+      mascotElement.classList.remove('pulse-glow');
+      
+      // Añadir efecto de brillo siempre
+      mascotElement.classList.add('pulse-glow');
+      
+      // Add appropriate animation based on section
+      switch(sectionId) {
+        case 'pomodoro':
+          containerElement.classList.add('wiggle');
+          faceElement.innerHTML = '^_^';
+          streakCount.textContent = '15 días - Pomodoro';
+          mascotElement.style.background = 'linear-gradient(135deg, #ff6b6b 0%, #feca57 50%, #ff9ff3 100%)';
+          break;
+        case 'progreso':
+          containerElement.classList.add('bounce-float');
+          faceElement.innerHTML = '>_<';
+          streakCount.textContent = '15 días - Progreso';
+          mascotElement.style.background = 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)';
+          break;
+        case 'gamificacion':
+          containerElement.classList.add('excited');
+          faceElement.innerHTML = '*o*';
+          streakCount.textContent = '15 días - Gamificación';
+          mascotElement.style.background = 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)';
+          break;
+        case 'colaborativo':
+          containerElement.classList.add('bounce-float');
+          faceElement.innerHTML = ':D';
+          streakCount.textContent = '15 días - Colaborativo';
+          mascotElement.style.background = 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)';
+          break;
+        case 'calendario':
+          containerElement.classList.add('wiggle');
+          faceElement.innerHTML = 'o_o';
+          streakCount.textContent = '15 días - Calendario';
+          mascotElement.style.background = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+          break;
+        case 'planes':
+          containerElement.classList.add('excited');
+          faceElement.innerHTML = '$_$';
+          streakCount.textContent = '15 días - Planes';
+          mascotElement.style.background = 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)';
+          break;
+        case 'contacto':
+          containerElement.classList.add('bounce-float');
+          faceElement.innerHTML = '^-^';
+          streakCount.textContent = '15 días - Contacto';
+          mascotElement.style.background = 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)';
+          break;
+        default:
+          containerElement.classList.add('bounce-float');
+          faceElement.innerHTML = '^_^';
+          streakCount.textContent = '15 días - Inicio';
+          mascotElement.style.background = 'var(--fire-gradient)';
+      }
+      
+      // Añadir interactividad a la mascota
+      setTimeout(() => {
+        containerElement.style.pointerEvents = 'auto';
+      }, 500);
+    }
+
+    // Add click handlers to nav links
+    document.addEventListener('click', (e) => {
+      if (e.target.matches('.nav-link') || e.target.closest('.nav-link')) {
+        const link = e.target.matches('.nav-link') ? e.target : e.target.closest('.nav-link');
+        
+        e.preventDefault();
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+          const sectionId = href.substring(1);
+          showSection(sectionId);
+        }
+      }
+    });
+
+    // Navigation controls for sidebar
+    function updateNavPosition(direction) {
+      const navItems = Array.from(document.querySelectorAll('.nav-item'));
+      
+      if (direction === 'up') {
+        currentNavIndex = Math.max(0, currentNavIndex - 1);
+      } else {
+        currentNavIndex = Math.min(navItems.length - 1, currentNavIndex + 1);
+      }
+      
+      // Get the current item and its link
+      const currentItem = navItems[currentNavIndex];
+      const currentLink = currentItem.querySelector('.nav-link');
+      
+      // Scroll to make the item visible
+      const navContainer = document.getElementById('sidebarNav');
+      const itemTop = currentItem.offsetTop;
+      navContainer.scrollTop = itemTop - 100;
+      
+      // Navigate to the section
+      const href = currentLink.getAttribute('href');
+      if (href && href.startsWith('#')) {
+        const sectionId = href.substring(1);
+        showSection(sectionId);
+      }
+      
+      // Add a visual effect to show the selection
+      currentItem.classList.add('fade-in');
+      setTimeout(() => {
+        currentItem.classList.remove('fade-in');
+      }, 600);
+    }
+
+    if (navUp) {
+      navUp.addEventListener('click', () => {
+        updateNavPosition('up');
+      });
+    }
+    
+    if (navDown) {
+      navDown.addEventListener('click', () => {
+        updateNavPosition('down');
+      });
+    }
+
+    // Keyboard navigation for sidebar
+    document.addEventListener('keydown', (e) => {
+      if (isAppStarted) {
+        if (e.key === 'ArrowUp') {
+          updateNavPosition('up');
+        } else if (e.key === 'ArrowDown') {
+          updateNavPosition('down');
+        }
+      }
+    });
+
+    // Notification functionality
+    function showNotification(message) {
+      if (notificationContent) {
+        notificationContent.textContent = message;
+      }
+      
+      if (notificationBar) {
+        notificationBar.classList.add('show');
+        
+        // Auto hide after 5 seconds
+        setTimeout(() => {
+          notificationBar.classList.remove('show');
+        }, 5000);
+      }
+    }
+    
+    if (closeNotification) {
+      closeNotification.addEventListener('click', () => {
+        notificationBar.classList.remove('show');
+      });
+    }
+
+    // Responsive sidebar behavior
+    function handleResize() {
+      if (window.innerWidth > 768 && isAppStarted) {
+        sidebar.classList.add('show');
+        mainContent.classList.add('sidebar-open');
+      } else if (window.innerWidth <= 768) {
+        sidebar.classList.remove('show');
+        mainContent.classList.remove('sidebar-open');
+      }
+    }
+
+    window.addEventListener('resize', handleResize);
+
+    // Add smooth transitions to all interactive elements
+    document.addEventListener('DOMContentLoaded', () => {
+      // Add interactive class to all clickable elements
+      const interactiveElements = document.querySelectorAll('button, .nav-link, .feature-card-ultra, .ultra-card');
+      interactiveElements.forEach(el => {
+        if (!el.classList.contains('interactive')) {
+          el.classList.add('interactive');
+        }
+      });
+    });
+
+    // Add glow effect to cards on mouse move
+    document.addEventListener('mousemove', (e) => {
+      const cards = document.querySelectorAll('.glow-on-hover');
+      cards.forEach(card => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        if (x >= 0 && x <= rect.width && y >= 0 && y <= rect.height) {
+          card.style.setProperty('--mouse-x', `${x}px`);
+          card.style.setProperty('--mouse-y', `${y}px`);
+        }
+      });
+    });
+
+    // Funcionalidad de la mascota interactiva
+    const streakMascotElement = document.getElementById('streakMascot');
+    const mascotMessageElement = document.getElementById('mascotMessage');
+    
+    // Mensajes motivacionales según la sección
+    const motivationalMessages = {
+      'inicio': [
+        '¡Bienvenido a StudyTrack! ¿Listo para aprender?',
+        '¡El éxito comienza con un buen plan de estudio!',
+        '¡15 días de racha! ¡Sigue así!'
+      ],
+      'pomodoro': [
+        '¡Concéntrate! Los descansos son importantes también',
+        '25 minutos de enfoque, 5 de descanso. ¡Tú puedes!',
+        'La técnica Pomodoro aumenta tu productividad'
+      ],
+      'progreso': [
+        '¡Mira cuánto has avanzado! ¡Impresionante!',
+        'Cada día de estudio cuenta para tu éxito',
+        '¡15 días consecutivos! Eso es disciplina'
+      ],
+      'gamificacion': [
+        '¡Estudiar puede ser divertido! ¡Gana más puntos!',
+        '¡Estás a punto de subir de nivel!',
+        '¡Desbloquea nuevos logros estudiando más!'
+      ],
+      'colaborativo': [
+        'Estudiar en grupo mejora la retención',
+        '¡Comparte tus conocimientos con otros!',
+        '¡La colaboración lleva al éxito!'
+      ],
+      'calendario': [
+        'Planificar tus sesiones mejora la productividad',
+        '¡No olvides tu próxima sesión de estudio!',
+        'Una buena planificación es clave para el éxito'
+      ],
+      'planes': [
+        '¡Desbloquea más funciones con un plan premium!',
+        '¡La inversión en tu educación siempre vale la pena!',
+        '¡Los planes Pro incluyen herramientas avanzadas!'
+      ],
+      'contacto': [
+        '¡Estamos aquí para ayudarte!',
+        '¡Tus comentarios nos ayudan a mejorar!',
+        '¿Tienes preguntas? ¡Estamos a un mensaje de distancia!'
+      ]
+    };
+    
+    // Función para mostrar mensaje aleatorio según la sección
+    function showMascotMessage(sectionId) {
+      if (!mascotMessageElement) return;
+      
+      const messages = motivationalMessages[sectionId] || motivationalMessages['inicio'];
+      const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+      
+      mascotMessageElement.textContent = randomMessage;
+      mascotMessageElement.classList.add('show');
+      
+      // Ocultar mensaje después de 5 segundos
+      setTimeout(() => {
+        mascotMessageElement.classList.remove('show');
+      }, 5000);
+    }
+    
+    // Agregar evento de clic a la mascota
+    if (streakMascotElement) {
+      streakMascotElement.addEventListener('click', () => {
+        const activeSection = lastSection || 'inicio';
+        showMascotMessage(activeSection);
+        
+        // Efecto visual al hacer clic
+        const mascotElement = streakMascotElement.querySelector('.streak-mascot');
+        if (mascotElement) {
+          mascotElement.style.transform = 'rotate(-45deg) scale(1.2)';
+          setTimeout(() => {
+            mascotElement.style.transform = 'rotate(-45deg) scale(1)';
+          }, 300);
+        }
+      });
+    }
+    
+    // Variables para Pomodoro Timer
+    let pomodoroState = {
+      isRunning: false,
+      currentTime: 25 * 60, // 25 minutos en segundos
+      mode: 'work', // 'work', 'shortBreak', 'longBreak'
+      workTime: 25 * 60,
+      shortBreakTime: 5 * 60,
+      longBreakTime: 20 * 60,
+      completedPomodoros: 0,
+      timer: null
+    };
+
+    // Función para formatear tiempo
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    }
+
+    // Función para actualizar el display del timer
+    function updateTimerDisplay() {
+      const timerDisplay = document.getElementById('timerDisplay');
+      const timerMode = document.getElementById('timerMode');
+      const timerProgress = document.getElementById('timerProgress');
+      
+      if (timerDisplay) {
+        timerDisplay.textContent = formatTime(pomodoroState.currentTime);
+      }
+      
+      if (timerMode) {
+        const modes = {
+          'work': 'Sesión de Trabajo',
+          'shortBreak': 'Descanso Corto',
+          'longBreak': 'Descanso Largo'
+        };
+        timerMode.textContent = modes[pomodoroState.mode];
+      }
+      
+      if (timerProgress) {
+        const totalTime = pomodoroState.mode === 'work' ? pomodoroState.workTime :
+                         pomodoroState.mode === 'shortBreak' ? pomodoroState.shortBreakTime :
+                         pomodoroState.longBreakTime;
+        const progress = ((totalTime - pomodoroState.currentTime) / totalTime) * 565.48;
+        timerProgress.style.strokeDashoffset = 565.48 - progress;
+      }
+    }
+
+    // Función para iniciar/pausar timer
+    function toggleTimer() {
+      const startPauseBtn = document.getElementById('startPauseBtn');
+      
+      if (pomodoroState.isRunning) {
+        // Pausar
+        clearInterval(pomodoroState.timer);
+        pomodoroState.isRunning = false;
+        if (startPauseBtn) {
+          startPauseBtn.innerHTML = '<i class="bi bi-play-fill"></i> Continuar';
+        }
+      } else {
+        // Iniciar
+        pomodoroState.isRunning = true;
+        if (startPauseBtn) {
+          startPauseBtn.innerHTML = '<i class="bi bi-pause-fill"></i> Pausar';
+        }
+        
+        pomodoroState.timer = setInterval(() => {
+          pomodoroState.currentTime--;
+          updateTimerDisplay();
+          
+          if (pomodoroState.currentTime <= 0) {
+            // Timer completado
+            clearInterval(pomodoroState.timer);
+            pomodoroState.isRunning = false;
+            
+            if (pomodoroState.mode === 'work') {
+              pomodoroState.completedPomodoros++;
+              // Decidir siguiente modo
+              if (pomodoroState.completedPomodoros % 4 === 0) {
+                pomodoroState.mode = 'longBreak';
+                pomodoroState.currentTime = pomodoroState.longBreakTime;
+              } else {
+                pomodoroState.mode = 'shortBreak';
+                pomodoroState.currentTime = pomodoroState.shortBreakTime;
+              }
+            } else {
+              pomodoroState.mode = 'work';
+              pomodoroState.currentTime = pomodoroState.workTime;
+            }
+            
+            updateTimerDisplay();
+            if (startPauseBtn) {
+              startPauseBtn.innerHTML = '<i class="bi bi-play-fill"></i> Iniciar';
+            }
+            
+            // Mostrar notificación
+            showNotification(`¡${pomodoroState.mode === 'work' ? 'Tiempo de trabajar' : 'Tiempo de descansar'}!`);
+          }
+        }, 1000);
+      }
+    }
+
+    // Función para reiniciar timer
+    function resetTimer() {
+      clearInterval(pomodoroState.timer);
+      pomodoroState.isRunning = false;
+      pomodoroState.mode = 'work';
+      pomodoroState.currentTime = pomodoroState.workTime;
+      
+      const startPauseBtn = document.getElementById('startPauseBtn');
+      if (startPauseBtn) {
+        startPauseBtn.innerHTML = '<i class="bi bi-play-fill"></i> Iniciar';
+      }
+      
+      updateTimerDisplay();
+    }
+
+    // Event listeners para Pomodoro
+    const startPauseBtn = document.getElementById('startPauseBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    
+    if (startPauseBtn) {
+      startPauseBtn.addEventListener('click', toggleTimer);
+    }
+    
+    if (resetBtn) {
+      resetBtn.addEventListener('click', resetTimer);
+    }
+
+    // Configuración de rangos
+    const workTimeRange = document.getElementById('workTimeRange');
+    const shortBreakRange = document.getElementById('shortBreakRange');
+    const longBreakRange = document.getElementById('longBreakRange');
+    
+    if (workTimeRange) {
+      workTimeRange.addEventListener('input', (e) => {
+        const value = parseInt(e.target.value);
+        pomodoroState.workTime = value * 60;
+        if (pomodoroState.mode === 'work' && !pomodoroState.isRunning) {
+          pomodoroState.currentTime = pomodoroState.workTime;
+          updateTimerDisplay();
+        }
+        document.getElementById('workTimeValue').textContent = `${value} min`;
+      });
+    }
+    
+    if (shortBreakRange) {
+      shortBreakRange.addEventListener('input', (e) => {
+        const value = parseInt(e.target.value);
+        pomodoroState.shortBreakTime = value * 60;
+        document.getElementById('shortBreakValue').textContent = `${value} min`;
+      });
+    }
+    
+    if (longBreakRange) {
+      longBreakRange.addEventListener('input', (e) => {
+        const value = parseInt(e.target.value);
+        pomodoroState.longBreakTime = value * 60;
+        document.getElementById('longBreakValue').textContent = `${value} min`;
+      });
+    }
+
+    // Funcionalidad del chat
+    const chatInput = document.getElementById('chatInput');
+    const sendMessage = document.getElementById('sendMessage');
+    const chatMessages = document.getElementById('chatMessages');
+    
+    function addMessage(text, isOwn = true) {
+      if (!chatMessages) return;
+      
+      const messageDiv = document.createElement('div');
+      messageDiv.className = `message ${isOwn ? 'own' : ''}`;
+      
+      const now = new Date();
+      const timeStr = `hace ${Math.floor(Math.random() * 5) + 1} min`;
+      
+      messageDiv.innerHTML = `
+        ${!isOwn ? '<div class="message-avatar"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=40&q=80" alt="User" class="avatar"></div>' : ''}
+        <div class="message-content">
+          <div class="message-header">
+            <span class="message-author">${isOwn ? 'Tú' : 'Usuario'}</span>
+            <span class="message-time">${timeStr}</span>
+          </div>
+          <div class="message-text">${text}</div>
+        </div>
+      `;
+      
+      chatMessages.appendChild(messageDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+    
+    if (sendMessage && chatInput) {
+      sendMessage.addEventListener('click', () => {
+        const text = chatInput.value.trim();
+        if (text) {
+          addMessage(text, true);
+          chatInput.value = '';
+          
+          // Respuesta automática simulada
+          setTimeout(() => {
+            const responses = [
+              '¡Excelente pregunta!',
+              'Estoy de acuerdo contigo',
+              '¿Podrías explicar más sobre eso?',
+              '¡Muy buen punto!',
+              'Eso me ayuda mucho, gracias'
+            ];
+            const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+            addMessage(randomResponse, false);
+          }, 1000 + Math.random() * 2000);
+        }
+      });
+      
+      chatInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          sendMessage.click();
+        }
+      });
+    }
+
+    // Funcionalidad del Libro de Reclamaciones
+    const claimsForm = document.getElementById('claimsForm');
+    if (claimsForm) {
+      claimsForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        // Obtener datos del formulario
+        const formData = {
+          type: document.getElementById('claimType').value,
+          name: document.getElementById('claimName').value,
+          lastName: document.getElementById('claimLastName').value,
+          docType: document.getElementById('docType').value,
+          docNumber: document.getElementById('docNumber').value,
+          email: document.getElementById('claimEmail').value,
+          phone: document.getElementById('claimPhone').value,
+          address: document.getElementById('claimAddress').value,
+          department: document.getElementById('claimDepartment').value,
+          province: document.getElementById('claimProvince').value,
+          detail: document.getElementById('claimDetail').value,
+          request: document.getElementById('claimRequest').value
+        };
+        
+        // Generar ID de reclamo
+        const claimId = `#${formData.type.toUpperCase().substring(0,3)}-2024-${String(Math.floor(Math.random() * 1000)).padStart(3, '0')}`;
+        
+        // Agregar a historial
+        const claimsHistory = document.getElementById('claimsHistory');
+        const newClaim = document.createElement('div');
+        newClaim.className = 'claim-item';
+        newClaim.innerHTML = `
+          <div class="claim-header">
+            <span class="claim-id">${claimId}</span>
+            <span class="claim-status status-pending">En Proceso</span>
+          </div>
+          <div class="claim-info">
+            <h5>${formData.detail.substring(0, 50)}...</h5>
+            <p class="claim-date">Fecha: ${new Date().toLocaleDateString('es-ES')}</p>
+            <p class="claim-type">Tipo: ${formData.type}</p>
+          </div>
+        `;
+        claimsHistory.insertBefore(newClaim, claimsHistory.firstChild);
+        
+        // Limpiar formulario
+        claimsForm.reset();
+        
+        // Mostrar notificación
+        showNotification(`Reclamo ${claimId} enviado exitosamente. Será procesado en un plazo máximo de 30 días.`);
+      });
+    }
+
+    // Funcionalidad del Sistema de Pagos
+    let currentPaymentData = {};
+
+    function openPaymentModal(plan, price) {
+      currentPaymentData = { plan, price };
+      
+      // Actualizar información del modal
+      document.getElementById('paymentPlanInfo').textContent = `Plan ${plan.charAt(0).toUpperCase() + plan.slice(1)} - $${price}/mes`;
+      document.getElementById('summaryPlan').textContent = plan.charAt(0).toUpperCase() + plan.slice(1);
+      document.getElementById('summaryPrice').textContent = price.toFixed(2);
+      
+      const tax = price * 0.18;
+      const total = price + tax;
+      document.getElementById('summaryTax').textContent = tax.toFixed(2);
+      document.getElementById('summaryTotal').textContent = total.toFixed(2);
+      
+      // Actualizar montos para Yape/Plin (convertir a soles)
+      const solRate = 3.75; // Tasa de cambio aproximada
+      document.getElementById('yapeAmount').textContent = (total * solRate).toFixed(2);
+      document.getElementById('plinAmount').textContent = (total * solRate).toFixed(2);
+      
+      // Mostrar modal
+      document.getElementById('paymentModal').classList.add('show');
+    }
+
+    function closePaymentModal() {
+      document.getElementById('paymentModal').classList.remove('show');
+      // Limpiar formularios
+      document.getElementById('paymentFormCard').reset();
+    }
+
+    // Selección de método de pago
+    document.addEventListener('click', (e) => {
+      if (e.target.closest('.payment-option')) {
+        const option = e.target.closest('.payment-option');
+        const method = option.dataset.method;
+        
+        // Activar opción seleccionada
+        document.querySelectorAll('.payment-option').forEach(opt => opt.classList.remove('active'));
+        option.classList.add('active');
+        
+        // Mostrar formulario correspondiente
+        document.querySelectorAll('.payment-form').forEach(form => form.classList.add('hidden'));
+        document.getElementById(`${method}Form`).classList.remove('hidden');
+        
+        // Actualizar botón de pago
+        const payBtn = document.getElementById('processPaymentBtn');
+        switch(method) {
+          case 'card':
+            payBtn.innerHTML = '<i class="bi bi-lock-fill"></i> Procesar Pago';
+            break;
+          case 'paypal':
+            payBtn.innerHTML = '<i class="bi bi-paypal"></i> Pagar con PayPal';
+            break;
+          case 'yape':
+            payBtn.innerHTML = '<i class="bi bi-qr-code"></i> Confirmar Pago Yape';
+            break;
+          case 'plin':
+            payBtn.innerHTML = '<i class="bi bi-qr-code"></i> Confirmar Pago Plin';
+            break;
+        }
+      }
+    });
+
+    // Formateo automático de tarjeta
+    const cardNumber = document.getElementById('cardNumber');
+    const cardExpiry = document.getElementById('cardExpiry');
+    
+    if (cardNumber) {
+      cardNumber.addEventListener('input', (e) => {
+        let value = e.target.value.replace(/\s/g, '').replace(/[^0-9]/gi, '');
+        let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
+        e.target.value = formattedValue;
+      });
+    }
+    
+    if (cardExpiry) {
+      cardExpiry.addEventListener('input', (e) => {
+        let value = e.target.value.replace(/\D/g, '');
+        if (value.length >= 2) {
+          value = value.substring(0, 2) + '/' + value.substring(2, 4);
+        }
+        e.target.value = value;
+      });
+    }
+
+    function processPayment() {
+      const activeMethod = document.querySelector('.payment-option.active').dataset.method;
+      
+      // Simulación de procesamiento
+      const payBtn = document.getElementById('processPaymentBtn');
+      payBtn.disabled = true;
+      payBtn.innerHTML = '<i class="bi bi-hourglass-split"></i> Procesando...';
+      
+      setTimeout(() => {
+        closePaymentModal();
+        showNotification(`¡Pago procesado exitosamente! Tu suscripción al plan ${currentPaymentData.plan} está activa.`);
+        
+        // Restaurar botón
+        payBtn.disabled = false;
+        payBtn.innerHTML = '<i class="bi bi-lock-fill"></i> Procesar Pago';
+      }, 2000);
+    }
+
+    // Hacer funciones globales
+    window.openPaymentModal = openPaymentModal;
+    window.closePaymentModal = closePaymentModal;
+    window.processPayment = processPayment;
+
+    // Inicializar timer display
+    updateTimerDisplay();
+    
+    // Initialize the app
+    console.log('StudyTrack Ultra Modern Design Loaded! 🚀');
+  </script>
+</body>
+</html>
